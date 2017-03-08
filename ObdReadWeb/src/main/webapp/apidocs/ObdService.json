@@ -1,0 +1,73 @@
+{
+  "apiVersion" : "1",
+  "swaggerVersion" : "1.2",
+  "basePath" : "/ObdReadWeb/rest",
+  "resourcePath" : "/ObdService",
+  "apis" : [ {
+    "path" : "/ObdService",
+    "operations" : [ {
+      "method" : "GET",
+      "nickname" : "status",
+      "type" : "string",
+      "summary" : "Método para verificar se serviço está respondendo",
+      "produces" : [ "text/plain" ]
+    } ]
+  }, {
+    "path" : "/ObdService/recebeDados",
+    "operations" : [ {
+      "method" : "POST",
+      "nickname" : "consulta",
+      "type" : "string",
+      "parameters" : [ {
+        "type" : "ObdType",
+        "paramType" : "body",
+        "name" : "dados",
+        "required" : true
+      } ],
+      "summary" : "Recebe os dados vindos da aplicação Android",
+      "responseMessages" : [ {
+        "code" : 403,
+        "message" : "erro Usuario não autorizado"
+      }, {
+        "code" : 404,
+        "message" : "Transacao não encontrada!"
+      }, {
+        "code" : 500,
+        "message" : "Erro interno -"
+      } ]
+    } ]
+  } ],
+  "models" : {
+    "ObdType" : {
+      "id" : "ObdType",
+      "properties" : {
+        "obdRpm" : {
+          "type" : "string"
+        },
+        "obdQtdeCombustivel" : {
+          "type" : "string"
+        },
+        "data" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "hora" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "latitude" : {
+          "type" : "string"
+        },
+        "hashUser" : {
+          "type" : "string"
+        },
+        "obdVelocidade" : {
+          "type" : "string"
+        },
+        "longitude" : {
+          "type" : "string"
+        }
+      }
+    }
+  }
+}
