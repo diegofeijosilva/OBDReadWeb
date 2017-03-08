@@ -1,0 +1,15 @@
+{
+  "apiVersion" : "1",
+  "swaggerVersion" : "1.2",
+  "basePath" : "/ObdReadWeb/rest",
+  "resourcePath" : "/obd",
+  "apis" : [ {
+    "path" : "/obd",
+    "operations" : [ {
+      "method" : "GET",
+      "nickname" : "status",
+      "type" : "string",
+      "produces" : [ "text/plain" ]
+    } ]
+  } ]
+}

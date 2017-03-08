@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	version="2.5">
+	<display-name>ObdReadWeb</display-name>
+
+	<welcome-file-list>
+		<welcome-file>index.xhtml</welcome-file>
+		<welcome-file>index.html</welcome-file> <!-- Para Visualizar o Swagger -->
+	</welcome-file-list>
+
+	<!-- JSF -->
+	<servlet>
+		<servlet-name>Faces Servlet</servlet-name>
+		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>*.xhtml</url-pattern>
+	</servlet-mapping>
+
+	<context-param>
+		<param-name>primefaces.THEME</param-name>
+		<param-value>bootstrap</param-value>
+	</context-param>
+
+	<!-- Configuracoes para web services REST -->
+	<context-param>
+		<param-name>resteasy.scan</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	<context-param>
+		<param-name>resteasy.servlet.mapping.prefix</param-name>
+		<param-value>/rest</param-value>
+	</context-param>
+	<listener>
+		<listener-class>org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap</listener-class>
+	</listener>
+	<servlet>
+		<servlet-name>resteasy-servlet</servlet-name>
+		<servlet-class>org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>resteasy-servlet</servlet-name>
+		<url-pattern>/rest/*</url-pattern>
+	</servlet-mapping>
+
+
+	<context-param>
+		<param-name>javax.faces.INTERPRET_EMPTY_STRING_SUBMITTED_VALUES_AS_NULL</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	<context-param>
+		<param-name>javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	<context-param>
+		<param-name>primefaces.THEME</param-name>
+		<param-value>#{userSettingsMB.theme}</param-value>
+	</context-param>
+	<context-param>
+		<param-name>primefaces.SUBMIT</param-name>
+		<param-value>partial</param-value>
+	</context-param>
+
+
+</web-app>
