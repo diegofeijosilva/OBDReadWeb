@@ -7,6 +7,15 @@
 	<packaging>war</packaging>
 	<name>ObdReadWeb</name>
 
+	<repositories>
+		<repository>
+			<id>prime-repo</id>
+			<name>PrimeFaces Maven Repository</name>
+			<url>http://repository.primefaces.org</url>
+			<layout>default</layout>
+		</repository>
+	</repositories>
+
 	<dependencies>
 		<!-- JSF -->
 		<dependency>
@@ -65,74 +74,76 @@
 				<filtering>true</filtering>
 			</resource>
 		</resources>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.0</version>
-				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
-				</configuration>
-			</plugin>
 
-			<!-- Plugin Swagger -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>2.9.1</version>
-				<executions>
-					<execution>
-						<phase>generate-resources</phase>
-						<configuration>
-							<doclet>com.carma.swagger.doclet.ServiceDoclet</doclet>
-							<docletArtifact>
-								<groupId>com.carma</groupId>
-								<artifactId>swagger-doclet</artifactId>
-								<version>1.0.2</version>
-							</docletArtifact>
-							<reportOutputDirectory>src/main/webapp</reportOutputDirectory>
-							<useStandardDocletOptions>false</useStandardDocletOptions>
-							<additionalparam>-apiVersion 1 -docBasePath /ObdReadWeb/apidocs
-								-apiBasePath /ObdReadWeb/rest
-								-swaggerUiPath
-								${project.build.directory}
-							</additionalparam>
-						</configuration>
-						<goals>
-							<goal>javadoc</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.0</version>
+					<configuration>
+						<source>1.8</source>
+						<target>1.8</target>
+					</configuration>
+				</plugin>
 
-			<plugin>
-				<groupId>org.jboss.as.plugins</groupId>
-				<artifactId>jboss-as-maven-plugin</artifactId>
-				<version>7.7.Final</version>
-				<configuration>
-					<id>${jboss.deploy.ip}:${jboss.deploy.port}</id>
-					<hostname>${jboss.deploy.ip}</hostname>
-					<port>${jboss.deploy.port}</port>
-					<domain>
-						<server-groups>
-							<server-group>${jboss.deploy.group}</server-group>
-						</server-groups>
-					</domain>
-					<filename>${project.build.finalName}.war</filename>
+				<!-- Plugin Swagger -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<version>2.9.1</version>
 					<executions>
 						<execution>
-							<phase>package</phase>
+							<phase>generate-resources</phase>
+							<configuration>
+								<doclet>com.carma.swagger.doclet.ServiceDoclet</doclet>
+								<docletArtifact>
+									<groupId>com.carma</groupId>
+									<artifactId>swagger-doclet</artifactId>
+									<version>1.0.2</version>
+								</docletArtifact>
+								<reportOutputDirectory>src/main/webapp</reportOutputDirectory>
+								<useStandardDocletOptions>false</useStandardDocletOptions>
+								<additionalparam>-apiVersion 1 -docBasePath /ObdReadWeb/apidocs
+									-apiBasePath /ObdReadWeb/rest
+									-swaggerUiPath
+									${project.build.directory}
+								</additionalparam>
+							</configuration>
 							<goals>
-								<goal>deploy</goal>
+								<goal>javadoc</goal>
 							</goals>
 						</execution>
 					</executions>
-				</configuration>
-			</plugin>
+				</plugin>
 
-		</plugins>
+				<plugin>
+					<groupId>org.jboss.as.plugins</groupId>
+					<artifactId>jboss-as-maven-plugin</artifactId>
+					<version>7.7.Final</version>
+					<configuration>
+						<id>${jboss.deploy.ip}:${jboss.deploy.port}</id>
+						<hostname>${jboss.deploy.ip}</hostname>
+						<port>${jboss.deploy.port}</port>
+						<domain>
+							<server-groups>
+								<server-group>${jboss.deploy.group}</server-group>
+							</server-groups>
+						</domain>
+						<filename>${project.build.finalName}.war</filename>
+						<executions>
+							<execution>
+								<phase>package</phase>
+								<goals>
+									<goal>deploy</goal>
+								</goals>
+							</execution>
+						</executions>
+					</configuration>
+				</plugin>
 
+			</plugins>
+		</pluginManagement>
 
 	</build>
 
