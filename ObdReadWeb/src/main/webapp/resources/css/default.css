@@ -1,0 +1,249 @@
+body {
+	font-size: 12px;
+	margin: 0px;
+	padding: 0;
+	color: gray;
+}
+
+h1,h2,h3 {
+	margin-top: 0;
+}
+
+h1 {
+	font-size: 1.6em;
+	font-weight: normal;
+}
+
+h2 {
+	font-size: 1.6em;
+}
+
+h3 {
+	font-size: 1em;
+	margin-top: 20px;
+}
+
+ul {
+	
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a img {
+	border: none;
+}
+
+img.left {
+	float: left;
+	margin: 0 20px 0 0;
+}
+
+img.right {
+	float: right;
+	margin: 0 0 0 20px;
+}
+
+.ui-widget {
+	font-size: 100% !important;
+}
+
+/* Página de logon */
+
+#logon-outer {
+	width: 100%;
+	margin-top: 130px;
+}
+
+#logon-panel {
+	margin: 0 auto;
+	width: 480px;
+	/* border: 0; */
+}
+
+#logon-panel .ui-panel-titlebar {
+	/*
+	border: 0;
+	background: none;
+	text-align: center;
+	font-style: italic;
+	font-weight: normal;
+	*/
+}
+
+.logon-grid {
+	margin: 0 auto;
+}
+
+.logon-grid tfoot td {
+	text-align: center;
+}
+
+.logon-grid thead th span {
+	color: red;
+}
+
+#logon-logo-topo {
+	background-image: url("#{resource['image/logo-topo.png']}");
+	background-repeat: no-repeat;
+	background-position: center;
+	text-align: center;
+	margin: 0 auto;
+	margin-bottom: 20px;
+	width: 480px;
+	height: 55px;
+}
+
+#logon-rodape {
+	margin: 20px auto;
+	width: 480px;
+	text-align: center;
+}
+
+#logon-rodape ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+#logon-rodape ul li {
+	display: inline;
+	margin: 0 20px;
+}
+
+#logon-rodape a {
+	display: inline-block;
+	margin: 0 25px;
+}
+
+#logon-rodape a span {
+	display: none;
+}
+
+#logon-rodape .link-procergs {
+	background: url("#{resource['/image/logo-procergs.png']}") no-repeat;
+	width: 130px;
+	height: 44px;
+}
+
+#logon-rodape .link-estado {
+	background: url("#{resource['/image/logo-estado.png']}") no-repeat;
+	width: 138px;
+	height: 55px;
+}
+
+#logo {
+	display: inline-block; 
+	width: 180px; 
+	text-align: center;
+}
+
+#user {
+	display: inline-block; 
+	vertical-align: bottom;
+}
+
+#icons {
+	display: inline-block; 
+	vertical-align: bottom; 
+	float: right;
+	height: 50px; 
+}
+
+a.bt-logoff, a.bt-altera-senha {
+	width: 30px;
+	height: 25px;
+	display: inline-block;
+	margin-top: 25px;
+}
+
+a.bt-logoff {
+	margin-right: 25px;
+	background: url("#{resource['image/sair.png']}") no-repeat 0 0;
+}
+
+a.bt-altera-senha {
+	margin-right: 15px;
+	background: url("#{resource['image/senha.png']}") no-repeat 0 0;
+	padding-top: 1px;
+}
+
+a.bt-logoff:hover, a.bt-logoff:active {
+	background: url("#{resource['image/sair-over.png']}") no-repeat 0 0;
+}
+
+a.bt-altera-senha:hover, a.bt-altera-senha:active {
+	background: url("#{resource['image/senha-over.png']}") no-repeat 0 0;
+	padding-top: 1px;
+}
+
+/* Logo da página inicial */
+
+.div-logo-inicio {
+	width: 549px;
+	height: 155px;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
+}
+
+#logon-panel .ui-widget-content {
+	/* border: 0; */
+}
+
+/* Botões */
+
+.ui-button  {
+	/* background: blue !important; */
+}
+
+/* Efeito over no cabeçalho das listas */
+
+thead .ui-state-hover {
+	/* background: orange !important; */
+}
+
+/* Efeito over nas linhas da lista */
+
+.ui-datatable tr.ui-state-hover {
+	/* background: #c0c0c0; */
+}
+
+/* Título das páginas */
+
+.ui-panel .ui-panel-titlebar {
+	padding: 5px 10px;
+	font-size: 150%;
+	/* background: none; */
+    /* border: 0 none; */ 
+}
+
+.ui-toolbar {
+	padding: 1px 1px;
+	font-size: 150%;
+	background: none;
+    border: 0 none; 
+}
+
+/* Cabeçalho das abas */
+
+.ui-tabs .ui-tabs-top > .ui-tabs-nav {
+	/* background: none; */
+}
+
+.ui-tabs-nav li {
+	/* background: blue !important; */
+}
+	
+.ui-tabs-nav .ui-tabs-selected {
+	/* background: gray !important; */
+}
