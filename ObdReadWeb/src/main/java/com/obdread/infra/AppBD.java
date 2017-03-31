@@ -1,5 +1,7 @@
 package com.obdread.infra;
 
+import java.util.Calendar;
+
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -20,6 +22,8 @@ public class AppBD<ED extends AppED<PK>, PK> extends FrameworkBDImpl<ED, PK> {
 
   @Override
   public ED inclui(ED ed) {
+    
+    ed.setCtrDthInc(Calendar.getInstance());
 
     em.persist(ed);
     em.flush();
@@ -29,6 +33,8 @@ public class AppBD<ED extends AppED<PK>, PK> extends FrameworkBDImpl<ED, PK> {
 
   @Override
   public ED altera(ED ed) {  
+    
+    ed.setCtrDthAtu(Calendar.getInstance());
     ed = em.merge(ed);
     em.flush();
     return ed;
