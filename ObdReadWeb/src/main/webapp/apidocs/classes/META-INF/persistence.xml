@@ -1,26 +1,18 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <persistence xmlns="http://java.sun.com/xml/ns/persistence"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
-	version="2.0">
-
-	<!-- <persistence-unit name="APM" transaction-type="JTA"> -->
-	<!-- <jta-data-source>java:jboss/datasources/ApmDS</jta-data-source> -->
-	<!-- <properties> -->
-	<!-- <property name="hibernate.format_sql" value="false"/> -->
-	<!-- <property name="hibernate.use_sql_comments" value="false" /> -->
-	<!-- </properties> -->
-	<!-- </persistence-unit> -->
-
-	<!-- DataSource Oracle -->
-	<persistence-unit name="HabDS" transaction-type="JTA">
-		<provider>org.hibernate.ejb.HibernatePersistence</provider>
-		<jta-data-source>java:jboss/datasources/HabDS</jta-data-source>
-		<properties>
-			<property name="hibernate.format_sql" value="true" />
-			<property name="hibernate.use_sql_comments" value="false" />
-			<property name="hibernate.show_sql" value="true" />
-		</properties>
-	</persistence-unit>
-
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0"  xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+  <persistence-unit name="MysqlDS">
+    <!-- jndi-name -->
+    <jta-data-source>java:jboss/datasources/MysqlDS</jta-data-source>
+    <properties>
+      <property name="hibernate.dialect"
+        value="org.hibernate.dialect.MySQLDialect"/>
+      <property name="hibernate.show_sql" value="true"/>
+      <property name="hibernate.hbm2ddl.auto" value="update"/>
+      <property name="hibernate.connection.charSet" value="UTF-8"/>
+      
+      <property name="hibernate.id.new_generator_mappings" value="true"/>
+      
+    </properties>
+  </persistence-unit>
 </persistence>

@@ -62,5 +62,19 @@ public class ObdReadServiceRest {
     return usuarioRN.inclui(usuarioED);
     
   }
+  
+  /**
+   * Recebe os dados vindos da aplicação Android
+   * @responseMessage 403 erro Usuario não autorizado
+   * @status 404 Transacao não encontrada!
+   * @status 500 Erro interno -
+   */
+  @POST
+  @Path("/alteraUsuario")
+  public UsuarioED alteraUsuario(UsuarioED usuarioED) {
+
+    return usuarioRN.altera(usuarioED);
+    
+  }
 
 }

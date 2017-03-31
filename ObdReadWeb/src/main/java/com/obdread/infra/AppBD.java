@@ -24,6 +24,7 @@ public class AppBD<ED extends AppED<PK>, PK> extends FrameworkBDImpl<ED, PK> {
   public ED inclui(ED ed) {
     
     ed.setCtrDthInc(Calendar.getInstance());
+    ed.setCtrDthAtu(Calendar.getInstance());
 
     em.persist(ed);
     em.flush();

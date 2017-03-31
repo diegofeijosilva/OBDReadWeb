@@ -13,6 +13,30 @@
       "produces" : [ "text/plain" ]
     } ]
   }, {
+    "path" : "/ObdService/alteraUsuario",
+    "operations" : [ {
+      "method" : "POST",
+      "nickname" : "alteraUsuario",
+      "type" : "UsuarioED",
+      "parameters" : [ {
+        "type" : "UsuarioED",
+        "paramType" : "body",
+        "name" : "usuarioED",
+        "required" : true
+      } ],
+      "summary" : "Recebe os dados vindos da aplicação Android",
+      "responseMessages" : [ {
+        "code" : 403,
+        "message" : "erro Usuario não autorizado"
+      }, {
+        "code" : 404,
+        "message" : "Transacao não encontrada!"
+      }, {
+        "code" : 500,
+        "message" : "Erro interno -"
+      } ]
+    } ]
+  }, {
     "path" : "/ObdService/incluiUsuario",
     "operations" : [ {
       "method" : "POST",
