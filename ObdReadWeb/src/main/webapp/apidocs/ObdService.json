@@ -13,6 +13,30 @@
       "produces" : [ "text/plain" ]
     } ]
   }, {
+    "path" : "/ObdService/incluiUsuario",
+    "operations" : [ {
+      "method" : "POST",
+      "nickname" : "incluiUsuario",
+      "type" : "UsuarioED",
+      "parameters" : [ {
+        "type" : "UsuarioED",
+        "paramType" : "body",
+        "name" : "usuarioED",
+        "required" : true
+      } ],
+      "summary" : "Recebe os dados vindos da aplicação Android",
+      "responseMessages" : [ {
+        "code" : 403,
+        "message" : "erro Usuario não autorizado"
+      }, {
+        "code" : 404,
+        "message" : "Transacao não encontrada!"
+      }, {
+        "code" : 500,
+        "message" : "Erro interno -"
+      } ]
+    } ]
+  }, {
     "path" : "/ObdService/recebeDados",
     "operations" : [ {
       "method" : "POST",
@@ -38,6 +62,66 @@
     } ]
   } ],
   "models" : {
+    "UsuarioED" : {
+      "id" : "UsuarioED",
+      "properties" : {
+        "senha" : {
+          "type" : "string"
+        },
+        "ticket" : {
+          "type" : "string"
+        },
+        "ctrDthInc" : {
+          "type" : "Calendar"
+        },
+        "ctrDthAtu" : {
+          "type" : "Calendar"
+        },
+        "propLista" : {
+          "type" : "PropLista"
+        },
+        "nome" : {
+          "type" : "string"
+        },
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "delete" : {
+          "type" : "boolean"
+        },
+        "usuarioId" : {
+          "type" : "integer",
+          "format" : "int64"
+        }
+      }
+    },
+    "TimeZone" : {
+      "id" : "TimeZone",
+      "properties" : {
+        "offset" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "rawOffset" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "displayName" : {
+          "type" : "string"
+        },
+        "dSTSavings" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "ID" : {
+          "type" : "string"
+        },
+        "iD" : {
+          "type" : "string"
+        }
+      }
+    },
     "ObdType" : {
       "id" : "ObdType",
       "properties" : {
@@ -65,6 +149,139 @@
           "type" : "string"
         },
         "longitude" : {
+          "type" : "string"
+        }
+      }
+    },
+    "PropLista" : {
+      "id" : "PropLista",
+      "properties" : {
+        "tamanho" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "ordem" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "Ordem"
+          }
+        },
+        "inicio" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "filtros" : {
+          "type" : "Map"
+        }
+      }
+    },
+    "Calendar" : {
+      "id" : "Calendar",
+      "properties" : {
+        "actualMinimum" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "displayName" : {
+          "type" : "string"
+        },
+        "lenient" : {
+          "type" : "boolean"
+        },
+        "weekDateSupported" : {
+          "type" : "boolean"
+        },
+        "zone" : {
+          "type" : "TimeZone"
+        },
+        "serialVersionOnStream" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "weekDate" : {
+          "type" : "void"
+        },
+        "set" : {
+          "type" : "boolean"
+        },
+        "calendarType" : {
+          "type" : "string"
+        },
+        "isSet" : {
+          "type" : "boolean[]"
+        },
+        "displayNames" : {
+          "type" : "Map"
+        },
+        "timeZone" : {
+          "type" : "TimeZone"
+        },
+        "isTimeSet" : {
+          "type" : "boolean"
+        },
+        "timeInMillis" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "greatestMinimum" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "leastMaximum" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "nextStamp" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "firstDayOfWeek" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "minimalDaysInFirstWeek" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "weekYear" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "maximum" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "time" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "actualMaximum" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "fields" : {
+          "type" : "int[]"
+        },
+        "weeksInWeekYear" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "minimum" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "areFieldsSet" : {
+          "type" : "boolean"
+        }
+      }
+    },
+    "Ordem" : {
+      "id" : "Ordem",
+      "properties" : {
+        "asc" : {
+          "type" : "boolean"
+        },
+        "propriedade" : {
           "type" : "string"
         }
       }
