@@ -3,40 +3,11 @@
 	xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 	
-	<p:submenu label="#{msg['menu.modulo-tabelas']}" rendered="#{sessaoMB.hasPermissionTabelas()}" icon="ui-icon-document" expanded="false">
-		<p:menuitem value="Cadastro CID" url="/mod-cid/cid-list.xhtml" rendered="#{sessionMB.hasPermission('HAB-H734048M-C')}" 	icon="ui-icon-document"/>
-		<p:menuitem value="Cadastro CEP" url="/mod-cep/cep-list.xhtml" rendered="#{sessionMB.hasPermission('HAB-CEP-C')}"		icon="ui-icon-document"/>
-		<p:menuitem value="Cadastro Serviço" url="/mod-servico/servico-list.xhtml" rendered="#{sessionMB.hasPermission('HAB-SERVICORENACH-CONSULTAR')}" icon="ui-icon-document"/>
+	
+		<p:submenu label="Teste"  icon="ui-icon-document" expanded="false">
+		<p:menuitem value="Cadastro CID" 	icon="ui-icon-document"/>
+
 	</p:submenu>
 	
-	<p:submenu label="#{msg['menu.modulo-comissao']}" rendered="#{sessaoMB.hasPermissionJuntaComissao()}" icon="ui-icon-document" expanded="false" >
-		<p:menuitem value="Junta/Comissão" url="/mod-comissao/junta-comissao-list.xhtml?flagPesquisa=0" 			rendered="#{sessionMB.hasPermission('GID','H135','')}"/>
-		<p:menuitem value="Agenda Semanal" url="/mod-comissao/agenda-semanal-junta-list.xhtml" 						rendered="#{sessionMB.hasPermission('GID','AGENDASEMANAL','LISTAR')}" />
-		<p:menuitem value="Calendário de Atuação" url="/mod-comissao/calendario-atuacao-junta-list.xhtml" 			rendered="#{sessionMB.hasPermission('GID','CALENDARIOATUACAO','LISTAR')}" />
-		<p:menuitem value="Cronograma" url="/mod-comissao/junta-cronograma-list.xhtml?flagPesquisa=1" 				rendered="#{sessionMB.hasPermission('GID','H113','')}" />
-		<p:menuitem value="Agenda Profissional" url="/mod-comissao/agenda-profissional-list.xhtml" 					rendered="#{agendaProfissionalListMB.hasPermission()}"/>
-		<p:menuitem value="Relação Substituições" url="/mod-comissao/relacao-substituicoes-medicos-lista.xhtml" 	rendered="#{relacaoSubstituicoesMedicosMB.hasPermission()}"/>
-		<p:menuitem value="Escala Médicos Junta" url="/mod-comissao/relatorio-escala-medicos-junta.xhtml" 			rendered="#{relEscalaMedicosMB.hasPermissionGerarRelatorio()}"/>
-		<p:menuitem value="Afast. de Profissional" url="/mod-comissao/afastamento-profissional-junta-list.xhtml" 	rendered="#{sessionMB.hasPermission('GID','AFASTAMENTOPROFISSIONALJUNTA','LISTAR')}"/>
-	</p:submenu>
-	
-	<p:submenu label="#{msg['menu.modulo-candidato-condutor']}" rendered="#{sessaoMB.hasPermissionCandidato()}" icon="ui-icon-document" expanded="false">
-		<p:menuitem value="Candidato/Condutor" url="/mod-candidato-condutor/kgid251d-list.xhtml"  rendered="#{sessionMB.hasPermission('GID-CANDIDATO-SEL')}" />
-		<p:menuitem value="Agendamento JMED" url="/mod-candidato-condutor/agendamento-condutor-list.xhtml?codIndiv=0"  rendered="#{sessionMB.hasPermission('GID','H120','')}" />
-	</p:submenu>
-	
-	<p:submenu label="#{msg['menu.modulo-renachs']}" rendered="#{sessaoMB.hasPermissionRenach()}" icon="ui-icon-document" expanded="false">
-		<p:menuitem value="RENACHs Encerrados"   url="/mod-renachs/rel-renachs-encerrados-list.xhtml" rendered="#{sessionMB.hasPermission('GID','H287','')}" />
-	    <p:menuitem value="Transações com erro"  url="/mod-renachs/transacoes-erro-bca-list.xhtml" rendered="#{sessionMB.hasPermission('GID','RENACH','CONSULTAERROSBCA')}" />
-	</p:submenu>
-	
-	
-		
-	<p:submenu label="#{msg['menu.modulo-oficios']}" rendered="#{sessaoMB.hasPermissionOficios()}" icon="ui-icon-document" expanded="false">
-		<p:menuitem value="Tipo de Ofício" url="/mod-oficios/tipo-documento-list.xhtml" rendered="#{sessionMB.hasPermission('GID','TIPODOCOFICIO','SELECAO')}"/>
-		<p:menuitem value="Texto" url="/mod-oficios/texto-list.xhtml" 					rendered="#{sessionMB.hasPermission('GID','TEXTOOFICIO','SELECAO')}"/>
-		<p:menuitem value="Responsável" url="/mod-oficios/responsavel-list.xhtml" 		rendered="#{sessionMB.hasPermission('GID','RESPONSOFICIO','CONSULTA')}"/>
-		<p:menuitem value="Oficio" url="/mod-oficios/oficio-list.xhtml" 				rendered="#{sessionMB.hasPermission('GID','OFICIO','CONSULTAR')}"/>
-	</p:submenu>
 
 </ui:composition>

@@ -17,6 +17,13 @@
 	</repositories>
 
 	<dependencies>
+
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+			<version>6.0</version>
+		</dependency>
+		
 		<!-- JSF -->
 		<dependency>
 			<groupId>org.primefaces</groupId>
