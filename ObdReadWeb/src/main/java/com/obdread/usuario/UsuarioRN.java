@@ -23,6 +23,12 @@ public class UsuarioRN extends AppRN<UsuarioED, Long> {
     super.setBD(bd);
   }
 
+  /**
+   * GERA UM CÓDIGO HASH QUE SERÁ UTILIZADO COMO TICKET PELO ANDROID
+   * PARA ENVIO DAS INFORMAÇÕES
+   * @param ed
+   * @return
+   */
   public String geradorTicket(UsuarioED ed) {
     Random random = new Random(); 
     String frase = ed.getNome() + "???" + ed.getSenha() + "???" + random.nextInt(100000); 
