@@ -52,6 +52,12 @@ public class UsuarioRN extends AppRN<UsuarioED, Long> {
     ed.setTicket(geradorTicket(ed));
     return super.inclui(ed);
   }
+  
+  @Override
+  public UsuarioED altera(UsuarioED ed) {
+    ed.setTicket(geradorTicket(ed));
+    return super.altera(ed);
+  }
 
   //  @Inject
   //  CronogramaDistribuicaoMinimaProfisBD cronogramaDistribuicaoMinimaProfisBD;
