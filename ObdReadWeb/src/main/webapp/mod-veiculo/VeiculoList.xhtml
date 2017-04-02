@@ -1,0 +1,79 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/WEB-INF/templates/layout-classic.xhtml">
+
+	<ui:define name="body">
+
+		<f:event type="preRenderView" listener="#{veiculoListMB.init}" />
+
+		<h:form id="form">
+
+			<p:panel id="panel" header="Listagem de Veículos">
+				<p:messages id="messages" showDetail="true" autoUpdate="true"
+					closable="true" />
+
+				<p:toolbar id="botoesPanel">
+					<f:facet name="left">
+						<p:commandButton value="Novo"
+							icon="ui-icon-document"
+							action="junta-cronograma-form?faces-redirect=true" ajax="false"
+							rendered="true" />
+
+						<p:commandButton value="Pesquisar"
+							icon="ui-icon-search" process="@this"
+							oncomplete="PF('pesquisarJuntaCronograma').show();"
+							rendered="true" />
+
+<!-- 						<p:commandButton value="ConfiguraÃ§Ãµes" icon="ui-icon-wrench" -->
+<!-- 							process="@this" -->
+<!-- 							oncomplete="PF('configuracoesCronograma').show();" -->
+<!-- 							rendered="#{sessionMB.hasPermission('GID','CRONOGRAMA-JUN','CFG')}" /> -->
+					</f:facet>
+
+				</p:toolbar>
+
+				<p:separator />
+
+				<p:dataTable id="lista" var="entity" rowKey="#{entity.id}"
+					value="#{veiculoListMB.listaVeiculos}" rows="25"
+					paginator="true" lazy="true"
+					paginatorTemplate="#{msg['datatable.paginatorTemplate']}"
+					currentPageReportTemplate="#{msg['datatable.pageReportTemplate']}"
+					rowsPerPageTemplate="25,50,100" pageLinks="5"
+					paginatorPosition="bottom"
+					
+					sortBy="#{entity.id}" sortOrder="ascending"
+					emptyMessage="Sem Registros">
+
+					<p:column sortBy="#{entity.id}"
+						style="width: 180px;">
+						<f:facet name="header">
+							<h:outputText value="Veículo" />
+						</f:facet>
+						<h:link value="#{entity.nome}"
+							outcome="#{cronogramaListMB.redirectCronogramaEditar(entity)}">
+							<f:param name="id" value="#{entity.id}" />
+						</h:link>
+					</p:column>
+
+					
+
+				</p:dataTable>
+
+			</p:panel>
+		</h:form>
+
+		<!-- 		<p:dialog header="Pesquisar Cronograma" -->
+		<!-- 			visible="#{cronogramaListMB.abreTelaPesquisa != 1}" dynamic="false" -->
+		<!-- 			modal="true" appendTo="@(body)" widgetVar="pesquisarJuntaCronograma" -->
+		<!-- 			height="40%" width="35%"> -->
+		<!-- 			<ui:include src="/mod-comissao/junta-cronograma-pesq.xhtml" /> -->
+		<!-- 		</p:dialog> -->
+
+	</ui:define>
+
+</ui:composition>

@@ -5,7 +5,7 @@
 <f:view locale="#{userSettingsMB.language}" contentType="text/html">
 	<h:head>
 		<link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/resources/image/favicon.ico" />
-		<title>#{msg['label.nome-sistema']}</title>
+		<title>ObdRead - Módulo WEB</title>
 	</h:head>
 	<h:body>
 		<h:outputScript name="applib.js" library="js" />
@@ -15,37 +15,33 @@
 			<p:graphicImage value="/resources/image/ajaxloadingbar.gif" />
 		</p:dialog>
 
-		<f:metadata>
-			<o:enableRestorableView />
-			<f:viewParam name="page" value="#{logonFormMB.page}" />
-		</f:metadata>
+
 		<p:growl showDetail="true" globalOnly="true" autoUpdate="true" showSummary="false" severity="error, info" sticky="true" redisplay="false" />
 		<div id="logon-outer">
 			<div id="logon-logo-topo"></div>
-			<p:panel id="logon-panel" header="#{msg['logon.header']}">
+			<p:panel id="logon-panel" header="Acesso ao Sistema">
 				<p:tabView id="tabview" widgetVar="tabs">
-					<p:tab title="#{msg['logon.org2']}" rendered="#{applicationProperties.logonAbaOrganizacao}">
+					<p:tab title="Acessar" rendered="true">
 						<h:form id="formOrg">
-							<h:inputHidden value="#{logonFormMB.page}" />
+							
 							<p:focus rendered="#{facesContext.postback}" />
 							<h:panelGrid columns="3" styleClass="logon-grid">
-								<p:outputLabel for="organizacao" value="#{msg['logon.org']}" />
-								<p:inputText id="organizacao" required="true" size="25" value="#{logonFormMB.ed.organizacao}"
-									maxlength="#{applicationProperties.logonOrganizacaoMaxlength}" />
-								<p:message for="organizacao" display="icon" />
-								<p:outputLabel for="matricula" value="#{msg['logon.matr']}" />
-								<p:inputText id="matricula" required="true" size="25" value="#{logonFormMB.ed.matricula}"
+								
+								<p:outputLabel for="email" value="Email" />
+								<p:inputText id="email" required="true" size="25" value="#{logonFormMB.ed.matricula}"
 									validatorMessage="#{msg['constraints.number.invalid']}">
 									<f:validateRegex pattern="[0-9]*" />
 								</p:inputText>
-								<p:message for="matricula" display="icon" />
-								<p:outputLabel for="senha" value="#{msg['logon.senha']}" />
+								<p:message for="email" display="icon" />
+								
+								<p:outputLabel for="senha" value="Senha" />
 								<p:password id="senha" required="true" size="10" value="#{logonFormMB.ed.senha}" />
 								<p:message for="senha" display="icon" />
+								
 								<f:facet name="footer">
-									<p:commandButton id="ok" value="#{msg['label.ok']}" action="#{logonFormMB.logonOrganizacao}" partialSubmit="true" process="@form"
+									<p:commandButton id="ok" value="Acessar" action="#{logonFormMB.logonOrganizacao}" partialSubmit="true" process="@form"
 										update="@form" />
-									<p:commandButton value="#{msg['label.reset']}" action="#{logonFormMB.limpaOrganizacao}" immediate="true" partialSubmit="true"
+									<p:commandButton value="Limpar" action="#{logonFormMB.limpaOrganizacao}" immediate="true" partialSubmit="true"
 										process="@this" update="@form">
 										<p:resetInput target="formOrg" />
 									</p:commandButton>
@@ -53,193 +49,45 @@
 							</h:panelGrid>
 						</h:form>
 					</p:tab>
-					<p:tab title="#{msg['label.email']}" rendered="#{applicationProperties.logonAbaEmail}">
-						<h:form id="formEmail">
-							<h:inputHidden value="#{logonFormMB.page}" />
+				
+					
+					<p:tab title="Novo Usuário" rendered="true">
+						<h:form id="formNewUser">
+							
 							<p:focus rendered="#{facesContext.postback}" />
 							<h:panelGrid columns="3" styleClass="logon-grid">
-								<p:outputLabel for="email" value="#{msg['label.email']}" />
-								<p:inputText id="email" required="true" size="40" value="#{logonFormMB.ed.email}"
-									validatorMessage="#{msg['constraints.email.invalid']}">
-									<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+								
+								<p:outputLabel for="email" value="Email" />
+								<p:inputText id="email" required="true" size="25" value="#{logonFormMB.ed.matricula}"
+									validatorMessage="#{msg['constraints.number.invalid']}">
+									<f:validateRegex pattern="[0-9]*" />
 								</p:inputText>
 								<p:message for="email" display="icon" />
-								<p:outputLabel for="senhaEmail" value="#{msg['logon.senha']}" />
-								<p:password id="senhaEmail" required="true" size="10" value="#{logonFormMB.ed.senha}" />
-								<p:message for="senhaEmail" display="icon" />
+								
+								<p:outputLabel for="senha" value="Senha" />
+								<p:password id="senha" required="true" size="10" value="#{logonFormMB.ed.senha}" />
+								<p:message for="senha" display="icon" />
+								
 								<f:facet name="footer">
-									<p:commandButton id="logonEmail" value="#{msg['label.ok']}" action="#{logonFormMB.logonEmail}" partialSubmit="true" process="@form" update="@form" />
-									<p:commandButton value="#{msg['label.reset']}" action="#{logonFormMB.limpaEmail}" immediate="true" partialSubmit="true"
+									<p:commandButton id="ok" value="Criar Novo Usuário" action="#{logonFormMB.logonOrganizacao}" partialSubmit="true" process="@form"
+										update="@form" />
+									<p:commandButton value="Limpar" action="#{logonFormMB.limpaOrganizacao}" immediate="true" partialSubmit="true"
 										process="@this" update="@form">
-										<p:resetInput target="formEmail" />
+										<p:resetInput target="formOrg" />
 									</p:commandButton>
 								</f:facet>
 							</h:panelGrid>
-						</h:form>
-					</p:tab>
-					<p:tab title="#{msg['logon.documento']}" rendered="#{applicationProperties.logonAbaDocumento}">
-						<h:form id="formDoc">
-							<h:inputHidden value="#{logonFormMB.page}" />
-							<p:focus rendered="#{facesContext.postback}" />
-							<h:panelGrid columns="5" styleClass="logon-grid">
-								<p:outputLabel for="documento" value="#{msg['logon.documento']}" />
-								<p:inputText id="documento" required="true" size="25" value="#{logonFormMB.ed.documento}" />
-								<p:message for="documento" display="icon" />
-								<p:selectOneMenu id="tipoDocumento" required="true" value="#{logonFormMB.ed.tipoDocumento}" style="width: 100px">
-									<f:selectItem itemValue="" itemLabel="" noSelectionOption="true" />
-									<f:selectItems value="#{logonFormMB.listaTipoDocumento}" />
-								</p:selectOneMenu>
-								<p:message for="tipoDocumento" display="icon" />
-								<p:outputLabel for="senhaDocumento" value="#{msg['logon.senha']}" />
-								<p:password id="senhaDocumento" required="true" size="10" value="#{logonFormMB.ed.senha}" />
-								<p:message for="senhaDocumento" display="icon" />
-								<p:spacer />
-								<p:spacer />
-								<p:outputLabel for="documentoOrganizacao" value="#{msg['logon.org']}" />
-								<p:inputText id="documentoOrganizacao" size="25" maxlength="#{applicationProperties.logonOrganizacaoMaxlength}"
-									value="#{logonFormMB.ed.documentoOrganizacao}" />
-								<p:message for="documentoOrganizacao" display="icon" />
-								<p:spacer />
-								<p:spacer />
-								<f:facet name="footer">
-									<p:commandButton id="logonDoc" value="#{msg['label.ok']}" action="#{logonFormMB.logonDocumento}" partialSubmit="true"
-										process="@form" update="@form :documentoDuplicado" />
-									<p:commandButton value="#{msg['label.reset']}" action="#{logonFormMB.limpaDocumento}" immediate="true" partialSubmit="true"
-										process="@this" update="@form">
-										<p:resetInput target="formDoc" />
-									</p:commandButton>
-								</f:facet>
-							</h:panelGrid>
-						</h:form>
-					</p:tab>
-					<p:tab title="Certificado Digital" rendered="#{applicationProperties.logonAbaCertificado}">
-						<h:form id="formCert">
-							<h:inputHidden value="#{logonFormMB.page}" />
-							<h:panelGrid columns="3" styleClass="logon-grid">
-								<p:graphicImage url="#{logonFormMB.enderecoAssinador}/imagens/icp-brasil.jpg" />
-								<div style="text-align: center;">
-									<b>Acesso por Certificado Digital</b> <br /> <br />Utilize um certificado digital ICP-Brasil, para acesso ao sistema.<br /> <br />
-								</div>
-								<p:graphicImage url="#{logonFormMB.enderecoAssinador}/imagens/logo_ac-rs_soe.gif" />
-								<p:spacer />
-								<h:panelGroup style="text-align:center;">
-									<p:outputLabel for="certificadoOrganizacao" value="#{msg['logon.org']}" />
-									<p:spacer width="10" />
-									<p:inputText id="certificadoOrganizacao" size="25" maxlength="#{applicationProperties.logonOrganizacaoMaxlength}"
-										value="#{logonFormMB.ed.certificadoOrganizacao}" />
-								</h:panelGroup>
-								<p:spacer />
-								<f:facet name="footer">
-									<p:commandButton type="button" value="#{msg['label.ok']}" onclick="gocert();" />
-									<p:commandButton value="#{msg['label.reset']}" action="#{logonFormMB.limpaCertificado}" immediate="true" partialSubmit="true"
-										process="@this" update="certificadoOrganizacao">
-										<p:resetInput target="certificadoOrganizacao" />
-									</p:commandButton>
-								</f:facet>
-							</h:panelGrid>
-							<p:commandButton id="logonCert" action="#{logonFormMB.logonCertificado}" style="display:none;" />
 						</h:form>
 					</p:tab>
 				</p:tabView>
 			</p:panel>
 			<div id="logon-rodape">
-				<a href="http://www.procergs.com.br" target="_blank" class="link-procergs"><span>PROCERGS</span></a>
-				<a href="http://www.portal.rs.gov.br/" target="_blank" class="link-estado"><span>Governo do Estado do Rio Grande do Sul</span></a>
+				<a href="http://www.google.com.br/" target="_blank" class="link-app-android"><span>Link para baixar o app Android</span></a>
 			</div>
 		</div>
-		<p:dialog id="documentoDuplicado" widgetVar="ddWidget" modal="true" appendTo="@(body)" dynamic="true"
-			header="Informe a Organização" resizable="false" closable="false" rendered="#{applicationProperties.logonAbaDocumento}"
-			visible="#{logonFormMB.documentoDuplicado and !facesContext.validationFailed and logonFormMB.ed.logonPor == '2'}">
-			<h:form id="formDD">
-				<p:focus />
-				<h:panelGrid columns="3" styleClass="logon-grid">
-					<f:facet name="header">
-						<span>Este documento está associado a mais de um usuário.<br />Escolha a organização desejada.
-						</span>
-					</f:facet>
-					<p:outputLabel for="documento" value="#{msg['logon.documento']}" />
-					<h:outputText id="documento" value="#{logonFormMB.ed.tipoDocumento} - #{logonFormMB.ed.documento}" />
-					<p:message for="documento" display="icon" />
-					<p:outputLabel for="organizacao" value="#{msg['logon.org']}" />
-					<p:selectOneMenu id="organizacao" required="true" value="#{logonFormMB.ed.documentoOrganizacao}">
-						<f:selectItems var="o" itemValue="#{o}" value="#{logonFormMB.listaOrganizacao}" />
-					</p:selectOneMenu>
-					<p:message for="organizacao" display="icon" />
-					<p:outputLabel for="senha" value="#{msg['logon.senha']}" />
-					<p:password id="senha" required="true" size="10" value="#{logonFormMB.ed.senha}" />
-					<p:message for="senha" display="icon" />
-					<f:facet name="footer">
-						<p:commandButton id="logonDD" value="#{msg['label.ok']}" action="#{logonFormMB.logonDocumento}" update="@form"
-							oncomplete="if (!args.validationFailed) PF('ddWidget').hide();" />
-						<p:commandButton value="#{msg['label.cancelar']}" action="#{logonFormMB.cancelaLogonDocumento}" immediate="true" />
-					</f:facet>
-				</h:panelGrid>
-			</h:form>
-		</p:dialog>
-		<p:dialog id="certificadoDuplicado" widgetVar="certificadoDuplicadoWidget" modal="true" appendTo="@(body)" 
-			dynamic="true" header="Informe a Organização" resizable="false" closable="false" rendered="#{applicationProperties.logonAbaCertificado}"
-			visible="#{logonFormMB.documentoDuplicado and !facesContext.validationFailed and logonFormMB.ed.logonPor == '3'}">
-			<h:form prependId="false">
-				<h:panelGrid columns="3" styleClass="logon-grid">
-					<f:facet name="header">
-						<span>Este certificado está associado a mais de um usuário.<br />Escolha a organização desejada.
-						</span>
-					</f:facet>
-					<p:outputLabel for="organizacao" value="#{msg['logon.org']}" />
-					<p:selectOneMenu id="organizacao" required="true" value="#{logonFormMB.ed.certificadoOrganizacao}">
-						<f:selectItems var="o" itemValue="#{o}" value="#{logonFormMB.listaOrganizacao}" />
-					</p:selectOneMenu>
-					<f:facet name="footer">
-						<p:commandButton type="button" value="#{msg['label.ok']}" onclick="gocert(true);" />
-						<p:commandButton value="#{msg['label.cancelar']}" action="#{logonFormMB.cancelaLogonCertificado}" immediate="true" />
-					</f:facet>
-				</h:panelGrid>
-			</h:form>
-		</p:dialog>
-		<p:confirmDialog header="#{msg['logon.header.sessao.expirada']}" severity="alert" appendTo="@(body)" width="330px" 
-			visible="#{not empty param['page'] and not logonFormMB.encerrado}" message="#{msg['logon.sessao.expirada']} - HAB" widgetVar="confirmDlg">
-			<h:form>
-				<p:commandButton type="button" value="#{msg['label.ok']}" onclick="PF('confirmDlg').hide()" />
-			</h:form>
-		</p:confirmDialog>
-		<p:confirmDialog header="#{msg['logon.header.sessao.expirada']}" severity="alert" appendTo="@(body)" 
-			visible="#{logonFormMB.encerrado}" message="Sua sessão foi encerrada por outro logon." widgetVar="confirmDlg2">
-			<h:form prependId="false">
-				<p:commandButton id="sessaoExpiradaOk" type="button" value="#{msg['label.ok']}" onclick="PF('confirmDlg2').hide()" />
-			</h:form>
-		</p:confirmDialog>
-		<script type="text/javascript">
-$(document).ready(function() {
-	PF('tabs').select(#{logonFormMB.selectedTab});$('#{logonFormMB.focus}').focus();
-	$.ajax({ 
-		type: "GET", 
-		url: "#{request.contextPath}/logoff?noredir=1", 
-		success:function(response) {}, 
-		error: function(xhr, textStatus, errorThrown) {}
-    }); 
-});
-</script>
-		<h:panelGroup rendered="#{applicationProperties.logonAbaCertificado}">
-<script type="text/javascript">
-function gocert(certificadoDuplicado) {
-	$('#javax\\.faces\\.ViewState').val($('#tabview\\:formCert #javax\\.faces\\.ViewState').val());
-	if (certificadoDuplicado) {
-		$('#certificadoOrganizacao').val($('#organizacao_input').val());
-	} else {
-		$('#certificadoOrganizacao').val($('#tabview\\:formCert\\:certificadoOrganizacao').val());
-	}
-	pesquisaApplet(document.frmCert, '#{request.requestURL}?page=#{logonFormMB.pageEncoded}');
-}
-</script>
-			<form id="frmCert" name="frmCert" method="post">
-				<input type="hidden" name="sistema" id="sistema" value="SOE" />
-				<input type="hidden" name="javax.faces.ViewState" id="javax.faces.ViewState" />
-				<input type="hidden" name="tabview:formCert" id="tabview:formCert" value="tabview:formCert" />
-				<input type="hidden" name="tabview:formCert:logonCert" id="tabview:formCert:logonCert" value="tabview:formCert:logonCert" />
-				<input type="hidden" name="certificadoOrganizacao" id="certificadoOrganizacao" />
-			</form>
-			<script type="text/javascript" src="#{logonFormMB.enderecoAssinador}/include/assinador-applet.js"></script>
-		</h:panelGroup>
+
+		
+		
 		<h:form id="formTicket">
 			<p:commandButton id="logonTicket" action="#{logonFormMB.logonTicket}" style="display:none;" />
 		</h:form>
