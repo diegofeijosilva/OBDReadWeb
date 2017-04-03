@@ -15,7 +15,8 @@ import com.obdread.infra.AppED;
 
 @Entity
 @Table(name = "TBL_USUARIO")
-@NamedQueries(value = { @NamedQuery(name = "UsuarioED.consulta", query = "SELECT C FROM UsuarioED C WHERE C.usuarioId = :id") })
+@NamedQueries(value = { @NamedQuery(name = "UsuarioED.consulta", query = "SELECT C FROM UsuarioED C WHERE C.usuarioId = :id"),
+                        @NamedQuery(name = "UsuarioED.findByEmailSenha", query = "SELECT c FROM UsuarioED c "+ "WHERE c.email = :email AND c.senha = :senha")})
 public class UsuarioED extends AppED<Long> implements Serializable {
 
   private static final long serialVersionUID = 1L;
@@ -25,8 +26,8 @@ public class UsuarioED extends AppED<Long> implements Serializable {
   @Column(name = "USUARIO_ID")
   private Long              usuarioId;
 
-  @Column(name = "NOME")
-  private String            nome;
+  @Column(name = "EMAIL")
+  private String            email;
 
   @Column(name = "SENHA")
   private String            senha;
@@ -47,12 +48,12 @@ public class UsuarioED extends AppED<Long> implements Serializable {
     this.usuarioId = usuarioId;
   }
 
-  public String getNome() {
-    return nome;
+  public String getEmail() {
+    return email;
   }
 
-  public void setNome(String nome) {
-    this.nome = nome;
+  public void setEmail(String email) {
+    this.email = email;
   }
 
   public String getSenha() {

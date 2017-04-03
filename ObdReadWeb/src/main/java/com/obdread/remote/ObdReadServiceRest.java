@@ -2,6 +2,7 @@ package com.obdread.remote;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -13,7 +14,9 @@ import javax.ws.rs.core.MediaType;
 
 import com.obdread.ed.ObdType;
 import com.obdread.ed.UsuarioED;
+import com.obdread.ed.VeiculoED;
 import com.obdread.usuario.UsuarioRN;
+import com.obdread.veiculo.VeiculoRN;
 
 @Path("/ObdService")
 @Produces(MediaType.APPLICATION_JSON)
@@ -22,6 +25,9 @@ public class ObdReadServiceRest {
   
   @Inject
   UsuarioRN usuarioRN;
+  
+  @Inject
+  VeiculoRN veiculoRN;
   
   /**
    * Método para verificar se serviço está respondendo
@@ -69,12 +75,27 @@ public class ObdReadServiceRest {
    * @status 404 Transacao não encontrada!
    * @status 500 Erro interno -
    */
-  @POST
-  @Path("/alteraUsuario")
-  public UsuarioED alteraUsuario(UsuarioED usuarioED) {
+  @GET
+  @Path("/listaUsuarios")
+  public List<UsuarioED> getAllUsuers() {
 
-    return usuarioRN.altera(usuarioED);
+    return usuarioRN.lista(new UsuarioED());
     
   }
+  
+  /**
+   * Recebe os dados vindos da aplicação Android
+   * @responseMessage 403 erro Usuario não autorizado
+   * @status 404 Transacao não encontrada!
+   * @status 500 Erro interno -
+   */
+  @POST
+  @Path("/incluiVeiculo")
+  public VeiculoED incluiVeiculo(VeiculoED veiculoED) {
+
+    return veiculoRN.inclui(veiculoED);
+    
+  }
+  
 
 }

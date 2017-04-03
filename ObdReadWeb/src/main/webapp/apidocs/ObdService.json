@@ -13,10 +13,10 @@
       "produces" : [ "text/plain" ]
     } ]
   }, {
-    "path" : "/ObdService/alteraUsuario",
+    "path" : "/ObdService/incluiUsuario",
     "operations" : [ {
       "method" : "POST",
-      "nickname" : "alteraUsuario",
+      "nickname" : "incluiUsuario",
       "type" : "UsuarioED",
       "parameters" : [ {
         "type" : "UsuarioED",
@@ -37,17 +37,38 @@
       } ]
     } ]
   }, {
-    "path" : "/ObdService/incluiUsuario",
+    "path" : "/ObdService/incluiVeiculo",
     "operations" : [ {
       "method" : "POST",
-      "nickname" : "incluiUsuario",
-      "type" : "UsuarioED",
+      "nickname" : "incluiVeiculo",
+      "type" : "VeiculoED",
       "parameters" : [ {
-        "type" : "UsuarioED",
+        "type" : "VeiculoED",
         "paramType" : "body",
-        "name" : "usuarioED",
+        "name" : "veiculoED",
         "required" : true
       } ],
+      "summary" : "Recebe os dados vindos da aplicação Android",
+      "responseMessages" : [ {
+        "code" : 403,
+        "message" : "erro Usuario não autorizado"
+      }, {
+        "code" : 404,
+        "message" : "Transacao não encontrada!"
+      }, {
+        "code" : 500,
+        "message" : "Erro interno -"
+      } ]
+    } ]
+  }, {
+    "path" : "/ObdService/listaUsuarios",
+    "operations" : [ {
+      "method" : "GET",
+      "nickname" : "getAllUsuers",
+      "type" : "array",
+      "items" : {
+        "$ref" : "UsuarioED"
+      },
       "summary" : "Recebe os dados vindos da aplicação Android",
       "responseMessages" : [ {
         "code" : 403,
@@ -86,40 +107,6 @@
     } ]
   } ],
   "models" : {
-    "UsuarioED" : {
-      "id" : "UsuarioED",
-      "properties" : {
-        "senha" : {
-          "type" : "string"
-        },
-        "ticket" : {
-          "type" : "string"
-        },
-        "ctrDthInc" : {
-          "type" : "Calendar"
-        },
-        "ctrDthAtu" : {
-          "type" : "Calendar"
-        },
-        "propLista" : {
-          "type" : "PropLista"
-        },
-        "nome" : {
-          "type" : "string"
-        },
-        "id" : {
-          "type" : "integer",
-          "format" : "int64"
-        },
-        "delete" : {
-          "type" : "boolean"
-        },
-        "usuarioId" : {
-          "type" : "integer",
-          "format" : "int64"
-        }
-      }
-    },
     "TimeZone" : {
       "id" : "TimeZone",
       "properties" : {
@@ -143,59 +130,6 @@
         },
         "iD" : {
           "type" : "string"
-        }
-      }
-    },
-    "ObdType" : {
-      "id" : "ObdType",
-      "properties" : {
-        "obdRpm" : {
-          "type" : "string"
-        },
-        "obdQtdeCombustivel" : {
-          "type" : "string"
-        },
-        "data" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "hora" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "latitude" : {
-          "type" : "string"
-        },
-        "hashUser" : {
-          "type" : "string"
-        },
-        "obdVelocidade" : {
-          "type" : "string"
-        },
-        "longitude" : {
-          "type" : "string"
-        }
-      }
-    },
-    "PropLista" : {
-      "id" : "PropLista",
-      "properties" : {
-        "tamanho" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "ordem" : {
-          "type" : "array",
-          "items" : {
-            "$ref" : "Ordem"
-          }
-        },
-        "inicio" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "filtros" : {
-          "type" : "Map"
         }
       }
     },
@@ -307,6 +241,124 @@
         },
         "propriedade" : {
           "type" : "string"
+        }
+      }
+    },
+    "UsuarioED" : {
+      "id" : "UsuarioED",
+      "properties" : {
+        "senha" : {
+          "type" : "string"
+        },
+        "ticket" : {
+          "type" : "string"
+        },
+        "ctrDthInc" : {
+          "type" : "Calendar"
+        },
+        "ctrDthAtu" : {
+          "type" : "Calendar"
+        },
+        "propLista" : {
+          "type" : "PropLista"
+        },
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "delete" : {
+          "type" : "boolean"
+        },
+        "usuarioId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "email" : {
+          "type" : "string"
+        }
+      }
+    },
+    "ObdType" : {
+      "id" : "ObdType",
+      "properties" : {
+        "obdRpm" : {
+          "type" : "string"
+        },
+        "obdQtdeCombustivel" : {
+          "type" : "string"
+        },
+        "data" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "hora" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "latitude" : {
+          "type" : "string"
+        },
+        "hashUser" : {
+          "type" : "string"
+        },
+        "obdVelocidade" : {
+          "type" : "string"
+        },
+        "longitude" : {
+          "type" : "string"
+        }
+      }
+    },
+    "PropLista" : {
+      "id" : "PropLista",
+      "properties" : {
+        "tamanho" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "ordem" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "Ordem"
+          }
+        },
+        "inicio" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "filtros" : {
+          "type" : "Map"
+        }
+      }
+    },
+    "VeiculoED" : {
+      "id" : "VeiculoED",
+      "properties" : {
+        "ctrDthInc" : {
+          "type" : "Calendar"
+        },
+        "ctrDthAtu" : {
+          "type" : "Calendar"
+        },
+        "propLista" : {
+          "type" : "PropLista"
+        },
+        "veiculoID" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "usuarioED" : {
+          "type" : "UsuarioED"
+        },
+        "nome" : {
+          "type" : "string"
+        },
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "delete" : {
+          "type" : "boolean"
         }
       }
     }

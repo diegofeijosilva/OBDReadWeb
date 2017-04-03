@@ -1,14 +1,14 @@
 package com.obdread.usuario;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.Random;
-
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
+import org.slf4j.Logger;
+
 import com.obdread.ed.UsuarioED;
+import com.obdread.exception.RNException;
 import com.obdread.infra.AppRN;
+import com.obdread.util.UtilRN;
 
 @Stateless
 public class UsuarioRN extends AppRN<UsuarioED, Long> {
@@ -19,44 +19,44 @@ public class UsuarioRN extends AppRN<UsuarioED, Long> {
   UsuarioBD                 bd;
 
   @Inject
+  UtilRN                    utilRN;
+
+  @Inject
   public void setBD(UsuarioBD bd) {
     super.setBD(bd);
   }
 
-  /**
-   * GERA UM CÓDIGO HASH QUE SERÁ UTILIZADO COMO TICKET PELO ANDROID
-   * PARA ENVIO DAS INFORMAÇÕES
-   * @param ed
-   * @return
-   */
-  public String geradorTicket(UsuarioED ed) {
-    Random random = new Random(); 
-    String frase = ed.getNome() + "???" + ed.getSenha() + "???" + random.nextInt(100000); 
-    MessageDigest md;
-    try {
-      md = MessageDigest.getInstance("MD5");
-      md.update(frase.getBytes());
-      byte[] hashMd5 = md.digest();
-
-      return hashMd5.toString();
-    } catch (NoSuchAlgorithmException e) {
-      e.printStackTrace();
-    }
-    
-    return new String();
-
-  }
-  
   @Override
   public UsuarioED inclui(UsuarioED ed) {
-    ed.setTicket(geradorTicket(ed));
+    if (ed.getEmail() == null || ed.getSenha() == null)
+      throw new RNException("CAMPO EMAIL E SENHA OBRIGATÓRIOS!");
+
+    ed.setEmail(ed.getEmail().toLowerCase().trim());
+
+    ed.setSenha(utilRN.convertStringToSHA256(ed.getSenha()));
+    ed.setTicket(utilRN.geradorTicket(ed));
     return super.inclui(ed);
   }
-  
+
   @Override
   public UsuarioED altera(UsuarioED ed) {
-    ed.setTicket(geradorTicket(ed));
+    if (ed.getEmail() == null || ed.getSenha() == null)
+      throw new RNException("CAMPO EMAIL E SENHA OBRIGATÓRIOS!");
+
+    ed.setEmail(ed.getEmail().toLowerCase().trim());
+
+    ed.setSenha(utilRN.convertStringToSHA256(ed.getSenha()));
+    ed.setTicket(utilRN.geradorTicket(ed));
     return super.altera(ed);
+  }
+
+  public UsuarioED isUsuarioReadyToLogin(String email, String senha) {
+    email.toLowerCase().trim();
+    senha = utilRN.convertStringToSHA256(senha);
+ //   logger.info("Verificando login do usuário " + email);
+
+    return bd.findByEmailSenha(email, senha);
+
   }
 
   //  @Inject

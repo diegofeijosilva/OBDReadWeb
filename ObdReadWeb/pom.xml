@@ -91,6 +91,14 @@
 			<version>13.0.1</version>
 		</dependency>
 		<!-- -->
+
+		<!-- Logging -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.6.1</version>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -114,105 +122,60 @@
 			</plugin>
 
 			<!-- Plugin Swagger -->
-<!-- 			<plugin> -->
-<!-- 				<groupId>org.apache.maven.plugins</groupId> -->
-<!-- 				<artifactId>maven-javadoc-plugin</artifactId> -->
-<!-- 				<version>2.9.1</version> -->
-<!-- 				<executions> -->
-<!-- 					<execution> -->
-<!-- 						<phase>generate-resources</phase> -->
-<!-- 						<configuration> -->
-<!-- 							<doclet>com.carma.swagger.doclet.ServiceDoclet</doclet> -->
-<!-- 							<docletArtifact> -->
-<!-- 								<groupId>com.carma</groupId> -->
-<!-- 								<artifactId>swagger-doclet</artifactId> -->
-<!-- 								<version>1.0.2</version> -->
-<!-- 							</docletArtifact> -->
-<!-- 							<reportOutputDirectory>src/main/webapp</reportOutputDirectory> -->
-<!-- 							<useStandardDocletOptions>false</useStandardDocletOptions> -->
-<!-- 							<additionalparam>-apiVersion 1 -docBasePath /ObdReadWeb/apidocs -->
-<!-- 								-apiBasePath /ObdReadWeb/rest -->
-<!-- 								-swaggerUiPath -->
-<!-- 								${project.build.directory} -->
-<!-- 							</additionalparam> -->
-<!-- 						</configuration> -->
-<!-- 						<goals> -->
-<!-- 							<goal>javadoc</goal> -->
-<!-- 						</goals> -->
-<!-- 					</execution> -->
-<!-- 				</executions> -->
-<!-- 			</plugin> -->
-		</plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.9.1</version>
+				<executions>
+					<execution>
+						<phase>generate-resources</phase>
+						<configuration>
+							<doclet>com.carma.swagger.doclet.ServiceDoclet</doclet>
+							<docletArtifact>
+								<groupId>com.carma</groupId>
+								<artifactId>swagger-doclet</artifactId>
+								<version>1.0.2</version>
+							</docletArtifact>
+							<reportOutputDirectory>src/main/webapp</reportOutputDirectory>
+							<useStandardDocletOptions>false</useStandardDocletOptions>
+							<additionalparam>-apiVersion 1 -docBasePath /ObdReadWeb/apidocs
+								-apiBasePath /ObdReadWeb/rest
+								-swaggerUiPath
+								${project.build.directory}
+							</additionalparam>
+						</configuration>
+						<goals>
+							<goal>javadoc</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-compiler-plugin</artifactId>
-					<version>3.0</version>
-					<configuration>
-						<source>1.8</source>
-						<target>1.8</target>
-					</configuration>
-				</plugin>
-
-				<!-- Plugin Swagger -->
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-javadoc-plugin</artifactId>
-					<version>2.9.1</version>
+			<plugin>
+				<groupId>org.jboss.as.plugins</groupId>
+				<artifactId>jboss-as-maven-plugin</artifactId>
+				<version>7.7.Final</version>
+				<configuration>
+					<id>${jboss.deploy.ip}:${jboss.deploy.port}</id>
+					<hostname>${jboss.deploy.ip}</hostname>
+					<port>${jboss.deploy.port}</port>
+					<domain>
+						<server-groups>
+							<server-group>${jboss.deploy.group}</server-group>
+						</server-groups>
+					</domain>
+					<filename>${project.build.finalName}.war</filename>
 					<executions>
 						<execution>
-							<phase>generate-resources</phase>
-							<configuration>
-								<doclet>com.carma.swagger.doclet.ServiceDoclet</doclet>
-								<docletArtifact>
-									<groupId>com.carma</groupId>
-									<artifactId>swagger-doclet</artifactId>
-									<version>1.0.2</version>
-								</docletArtifact>
-								<reportOutputDirectory>src/main/webapp</reportOutputDirectory>
-								<useStandardDocletOptions>false</useStandardDocletOptions>
-								<additionalparam>-apiVersion 1 -docBasePath /ObdReadWeb/apidocs
-									-apiBasePath /ObdReadWeb/rest
-									-swaggerUiPath
-									${project.build.directory}
-								</additionalparam>
-							</configuration>
+							<phase>package</phase>
 							<goals>
-								<goal>javadoc</goal>
+								<goal>deploy</goal>
 							</goals>
 						</execution>
 					</executions>
-				</plugin>
-
-				<plugin>
-					<groupId>org.jboss.as.plugins</groupId>
-					<artifactId>jboss-as-maven-plugin</artifactId>
-					<version>7.7.Final</version>
-					<configuration>
-						<id>${jboss.deploy.ip}:${jboss.deploy.port}</id>
-						<hostname>${jboss.deploy.ip}</hostname>
-						<port>${jboss.deploy.port}</port>
-						<domain>
-							<server-groups>
-								<server-group>${jboss.deploy.group}</server-group>
-							</server-groups>
-						</domain>
-						<filename>${project.build.finalName}.war</filename>
-						<executions>
-							<execution>
-								<phase>package</phase>
-								<goals>
-									<goal>deploy</goal>
-								</goals>
-							</execution>
-						</executions>
-					</configuration>
-				</plugin>
-
-			</plugins>
-		</pluginManagement>
+				</configuration>
+			</plugin>
+		</plugins>
 
 	</build>
 
