@@ -24,7 +24,7 @@ public class LoginFilter implements Filter {
 
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
-    //Captura o ManagedBean chamado “usuarioMB”
+    //Captura o ManagedBean chamado 
     LogonFormMB logonFormMB = (LogonFormMB) ((HttpServletRequest) request).getSession().getAttribute("logonFormMB");
     HttpServletRequest req = (HttpServletRequest) request;
 
