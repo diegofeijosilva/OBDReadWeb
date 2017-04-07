@@ -1,10 +1,8 @@
 package com.obdread.web.veiculo;
 
 import javax.annotation.PostConstruct;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.http.HttpSession;
 
 import org.omnifaces.cdi.ViewScoped;
 
@@ -12,7 +10,6 @@ import com.obdread.ed.VeiculoED;
 import com.obdread.infra.AppFormMB;
 import com.obdread.security.SessionMB;
 import com.obdread.veiculo.VeiculoRN;
-import com.obdread.web.logon.LogonFormMB;
 
 @Named
 @ViewScoped
@@ -35,7 +32,6 @@ public class VeiculoFormMB extends AppFormMB<VeiculoED, Long> {
   public void init() {
     // TODO Auto-generated method stub
     super.init();
-
   }
 
   @Override

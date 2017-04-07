@@ -1,32 +1,9 @@
-package com.obdread.veiculo;
+package com.obdread.veiculo.dadosveiculo;
 
-import java.util.List;
-
-import javax.persistence.NoResultException;
-import javax.persistence.NonUniqueResultException;
-import javax.persistence.Query;
-
-import com.obdread.ed.UsuarioED;
-import com.obdread.ed.VeiculoED;
+import com.obdread.ed.DadosVeiculoED;
 import com.obdread.infra.AppBD;
 
-public class VeiculoBD extends AppBD<VeiculoED, Long> {
-
-  public List<VeiculoED> listaVeiculosUsusario(UsuarioED usuarioED) {
-    StringBuffer sql = new StringBuffer();
-    sql.append("SELECT * FROM TBL_VEICULO A WHERE A.USUARIO_ID = :id");
-
-    Query query = super.getEntityManager().createNativeQuery(sql.toString(), VeiculoED.class);
-    query.setParameter("id", usuarioED.getId());
-
-    try {
-      return query.getResultList();
-    } catch (NoResultException e) {
-      return null;
-    } catch (NonUniqueResultException e) {
-      return null;
-    }
-  }
+public class DadosVeiculoBD extends AppBD<DadosVeiculoED, Long> {
 
 //  @Inject
 //  MunicipioRN   municipioRN;

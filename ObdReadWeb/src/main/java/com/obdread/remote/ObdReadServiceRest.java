@@ -1,26 +1,35 @@
 package com.obdread.remote;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import javax.ejb.AccessTimeout;
 import javax.inject.Inject;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
-import com.obdread.ed.ObdType;
+import org.apache.http.HttpStatus;
+
 import com.obdread.ed.UsuarioED;
 import com.obdread.ed.VeiculoED;
+import com.obdread.ed.rest.ObdType;
+import com.obdread.ed.rest.VeiculoTypeED;
+import com.obdread.exception.RNException;
 import com.obdread.usuario.UsuarioRN;
 import com.obdread.veiculo.VeiculoRN;
 
 @Path("/ObdService")
 @Produces(MediaType.APPLICATION_JSON)
-@Consumes(MediaType.APPLICATION_JSON)
+@AccessTimeout(value = 60, unit = TimeUnit.SECONDS)
 public class ObdReadServiceRest {
   
   @Inject
@@ -36,10 +45,10 @@ public class ObdReadServiceRest {
    */
   @GET
   @Produces(MediaType.TEXT_PLAIN)
-  public String status() {
+  public Response status() {
     String dataHoraAtual = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SSS").format(Calendar.getInstance().getTime());
     
-    return "[" + dataHoraAtual + "] - Serviço conversão de transações Online.";
+    return Response.ok("[" + dataHoraAtual + "] - Serviço Online.").build();
   }
   
   /**
@@ -50,52 +59,55 @@ public class ObdReadServiceRest {
    */
   @POST
   @Path("/recebeDados")
-  public String consulta(ObdType dados) {
-
-    return "OK";
-  }
-  
-  /**
-   * Recebe os dados vindos da aplicação Android
-   * @responseMessage 403 erro Usuario não autorizado
-   * @status 404 Transacao não encontrada!
-   * @status 500 Erro interno -
-   */
-  @POST
-  @Path("/incluiUsuario")
-  public UsuarioED incluiUsuario(UsuarioED usuarioED) {
-
-    return usuarioRN.inclui(usuarioED);
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response recebeDados(ObdType dados) {
     
+    if(dados.getHashUser().equals(""))
+      return Response.ok("Veiculo não encontrado!", MediaType.APPLICATION_JSON).build();
+    
+    UsuarioED usuarioED = usuarioRN.bucaUsuarioTicket(dados.getHashUser());
+    
+    if(dados.getIdVeiculo().equals(0))
+      //return Response.status(HttpStatus.SC_NOT_FOUND).entity("Veiculo não encontrado!").build();
+      return Response.status(Status.BAD_REQUEST).entity("Veiculo não encontrado!").build();
+    
+    VeiculoED veiculoED = veiculoRN.consulta(dados.getIdVeiculo());
+    
+    if (usuarioED == null || veiculoED == null)
+      return Response.status(HttpStatus.SC_NOT_FOUND).entity("Usuario ou Veiculo não encontrado!").build();
+    
+    return Response.ok(dados, MediaType.APPLICATION_JSON).build();
+   // return Response.ok(dados).build();
   }
-  
+
   /**
-   * Recebe os dados vindos da aplicação Android
+   * Lista os veículos do Usuário
    * @responseMessage 403 erro Usuario não autorizado
    * @status 404 Transacao não encontrada!
    * @status 500 Erro interno -
    */
   @GET
-  @Path("/listaUsuarios")
-  public List<UsuarioED> getAllUsuers() {
+  @Path("/listaVeiculos")
+  @Produces(MediaType.APPLICATION_JSON)
+  public List<VeiculoTypeED> consulta(@HeaderParam("hashUser") String hashUser) {
 
-    return usuarioRN.lista(new UsuarioED());
+    UsuarioED usuarioED = usuarioRN.bucaUsuarioTicket(hashUser);
     
+    if (usuarioED == null)
+      throw new RNException("Dados Inválidos!");
+    
+    List<VeiculoTypeED> listaVeiculoType = new ArrayList<VeiculoTypeED>();
+    for (VeiculoED ed : veiculoRN.listaVeiculosUsusario(usuarioED)){
+      VeiculoTypeED veiEd = new VeiculoTypeED();
+      veiEd.setIdVeiculo(ed.getId());
+      veiEd.setNome(ed.getNome());
+      
+      listaVeiculoType.add(veiEd);
+    }
+    
+    return listaVeiculoType;
   }
   
-  /**
-   * Recebe os dados vindos da aplicação Android
-   * @responseMessage 403 erro Usuario não autorizado
-   * @status 404 Transacao não encontrada!
-   * @status 500 Erro interno -
-   */
-  @POST
-  @Path("/incluiVeiculo")
-  public VeiculoED incluiVeiculo(VeiculoED veiculoED) {
-
-    return veiculoRN.inclui(veiculoED);
-    
-  }
   
 
 }

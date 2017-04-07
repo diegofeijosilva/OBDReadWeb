@@ -58,6 +58,13 @@ public class UsuarioRN extends AppRN<UsuarioED, Long> {
     return bd.findByEmailSenha(email, senha);
 
   }
+  
+  public UsuarioED bucaUsuarioTicket(String userTicket) {
+    if (userTicket == null || userTicket.equals(""))
+      throw new RNException("Ticket é obrigatório!");
+
+    return bd.bucaUsuarioTicket(userTicket);
+  }
 
   //  @Inject
   //  CronogramaDistribuicaoMinimaProfisBD cronogramaDistribuicaoMinimaProfisBD;

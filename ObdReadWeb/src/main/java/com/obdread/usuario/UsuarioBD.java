@@ -26,6 +26,22 @@ public class UsuarioBD extends AppBD<UsuarioED, Long> {
     }
 
   }
+  
+  public UsuarioED bucaUsuarioTicket(String userTicket) {
+    StringBuffer sql = new StringBuffer();
+    sql.append(" SELECT * FROM TBL_USUARIO A WHERE A.TICKET = :userTicket");
+
+    Query query = super.getEntityManager().createNativeQuery(sql.toString(), UsuarioED.class);
+    query.setParameter("userTicket", userTicket);
+    try {
+      return (UsuarioED) query.getSingleResult();
+    } catch (NoResultException e) {
+      return null;
+    } catch (NonUniqueResultException e) {
+      return null;
+    }
+
+  }
 
   //  @Inject
   //  MunicipioRN   municipioRN;

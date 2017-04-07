@@ -1,4 +1,4 @@
-package com.obdread.ed;
+package com.obdread.ed.rest;
 
 import java.io.Serializable;
 
@@ -18,6 +18,10 @@ public class ObdType implements Serializable {
 
   /// Hash do usuário
   private String            hashUser;
+
+  /// ID do Veículo
+  /// Hash do usuário
+  private Long              idVeiculo;
 
   private Integer           data;
   private Integer           hora;
@@ -93,6 +97,14 @@ public class ObdType implements Serializable {
 
   public void setHashUser(String hashUser) {
     this.hashUser = hashUser;
+  }
+
+  public Long getIdVeiculo() {
+    return idVeiculo;
+  }
+
+  public void setIdVeiculo(Long idVeiculo) {
+    this.idVeiculo = idVeiculo;
   }
 
 }

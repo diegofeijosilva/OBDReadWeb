@@ -8,68 +8,25 @@
     "operations" : [ {
       "method" : "GET",
       "nickname" : "status",
-      "type" : "string",
+      "type" : "Response",
       "summary" : "Método para verificar se serviço está respondendo",
       "produces" : [ "text/plain" ]
     } ]
   }, {
-    "path" : "/ObdService/incluiUsuario",
-    "operations" : [ {
-      "method" : "POST",
-      "nickname" : "incluiUsuario",
-      "type" : "UsuarioED",
-      "parameters" : [ {
-        "type" : "UsuarioED",
-        "paramType" : "body",
-        "name" : "usuarioED",
-        "required" : true
-      } ],
-      "summary" : "Recebe os dados vindos da aplicação Android",
-      "responseMessages" : [ {
-        "code" : 403,
-        "message" : "erro Usuario não autorizado"
-      }, {
-        "code" : 404,
-        "message" : "Transacao não encontrada!"
-      }, {
-        "code" : 500,
-        "message" : "Erro interno -"
-      } ]
-    } ]
-  }, {
-    "path" : "/ObdService/incluiVeiculo",
-    "operations" : [ {
-      "method" : "POST",
-      "nickname" : "incluiVeiculo",
-      "type" : "VeiculoED",
-      "parameters" : [ {
-        "type" : "VeiculoED",
-        "paramType" : "body",
-        "name" : "veiculoED",
-        "required" : true
-      } ],
-      "summary" : "Recebe os dados vindos da aplicação Android",
-      "responseMessages" : [ {
-        "code" : 403,
-        "message" : "erro Usuario não autorizado"
-      }, {
-        "code" : 404,
-        "message" : "Transacao não encontrada!"
-      }, {
-        "code" : 500,
-        "message" : "Erro interno -"
-      } ]
-    } ]
-  }, {
-    "path" : "/ObdService/listaUsuarios",
+    "path" : "/ObdService/listaVeiculos",
     "operations" : [ {
       "method" : "GET",
-      "nickname" : "getAllUsuers",
+      "nickname" : "consulta",
       "type" : "array",
       "items" : {
-        "$ref" : "UsuarioED"
+        "$ref" : "VeiculoTypeED"
       },
-      "summary" : "Recebe os dados vindos da aplicação Android",
+      "parameters" : [ {
+        "type" : "string",
+        "paramType" : "header",
+        "name" : "hashUser"
+      } ],
+      "summary" : "Lista os veículos do Usuário",
       "responseMessages" : [ {
         "code" : 403,
         "message" : "erro Usuario não autorizado"
@@ -79,14 +36,15 @@
       }, {
         "code" : 500,
         "message" : "Erro interno -"
-      } ]
+      } ],
+      "produces" : [ "application/json" ]
     } ]
   }, {
     "path" : "/ObdService/recebeDados",
     "operations" : [ {
       "method" : "POST",
-      "nickname" : "consulta",
-      "type" : "string",
+      "nickname" : "recebeDados",
+      "type" : "Response",
       "parameters" : [ {
         "type" : "ObdType",
         "paramType" : "body",
@@ -103,177 +61,19 @@
       }, {
         "code" : 500,
         "message" : "Erro interno -"
-      } ]
+      } ],
+      "produces" : [ "application/json" ]
     } ]
   } ],
   "models" : {
-    "TimeZone" : {
-      "id" : "TimeZone",
+    "VeiculoTypeED" : {
+      "id" : "VeiculoTypeED",
       "properties" : {
-        "offset" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "rawOffset" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "displayName" : {
-          "type" : "string"
-        },
-        "dSTSavings" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "ID" : {
-          "type" : "string"
-        },
-        "iD" : {
-          "type" : "string"
-        }
-      }
-    },
-    "Calendar" : {
-      "id" : "Calendar",
-      "properties" : {
-        "actualMinimum" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "displayName" : {
-          "type" : "string"
-        },
-        "lenient" : {
-          "type" : "boolean"
-        },
-        "weekDateSupported" : {
-          "type" : "boolean"
-        },
-        "zone" : {
-          "type" : "TimeZone"
-        },
-        "serialVersionOnStream" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "weekDate" : {
-          "type" : "void"
-        },
-        "set" : {
-          "type" : "boolean"
-        },
-        "calendarType" : {
-          "type" : "string"
-        },
-        "isSet" : {
-          "type" : "boolean[]"
-        },
-        "displayNames" : {
-          "type" : "Map"
-        },
-        "timeZone" : {
-          "type" : "TimeZone"
-        },
-        "isTimeSet" : {
-          "type" : "boolean"
-        },
-        "timeInMillis" : {
+        "idVeiculo" : {
           "type" : "integer",
           "format" : "int64"
         },
-        "greatestMinimum" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "leastMaximum" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "nextStamp" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "firstDayOfWeek" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "minimalDaysInFirstWeek" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "weekYear" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "maximum" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "time" : {
-          "type" : "string",
-          "format" : "date-time"
-        },
-        "actualMaximum" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "fields" : {
-          "type" : "int[]"
-        },
-        "weeksInWeekYear" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "minimum" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "areFieldsSet" : {
-          "type" : "boolean"
-        }
-      }
-    },
-    "Ordem" : {
-      "id" : "Ordem",
-      "properties" : {
-        "asc" : {
-          "type" : "boolean"
-        },
-        "propriedade" : {
-          "type" : "string"
-        }
-      }
-    },
-    "UsuarioED" : {
-      "id" : "UsuarioED",
-      "properties" : {
-        "senha" : {
-          "type" : "string"
-        },
-        "ticket" : {
-          "type" : "string"
-        },
-        "ctrDthInc" : {
-          "type" : "Calendar"
-        },
-        "ctrDthAtu" : {
-          "type" : "Calendar"
-        },
-        "propLista" : {
-          "type" : "PropLista"
-        },
-        "id" : {
-          "type" : "integer",
-          "format" : "int64"
-        },
-        "delete" : {
-          "type" : "boolean"
-        },
-        "usuarioId" : {
-          "type" : "integer",
-          "format" : "int64"
-        },
-        "email" : {
+        "nome" : {
           "type" : "string"
         }
       }
@@ -298,6 +98,10 @@
         "latitude" : {
           "type" : "string"
         },
+        "idVeiculo" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
         "hashUser" : {
           "type" : "string"
         },
@@ -306,59 +110,6 @@
         },
         "longitude" : {
           "type" : "string"
-        }
-      }
-    },
-    "PropLista" : {
-      "id" : "PropLista",
-      "properties" : {
-        "tamanho" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "ordem" : {
-          "type" : "array",
-          "items" : {
-            "$ref" : "Ordem"
-          }
-        },
-        "inicio" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "filtros" : {
-          "type" : "Map"
-        }
-      }
-    },
-    "VeiculoED" : {
-      "id" : "VeiculoED",
-      "properties" : {
-        "ctrDthInc" : {
-          "type" : "Calendar"
-        },
-        "ctrDthAtu" : {
-          "type" : "Calendar"
-        },
-        "propLista" : {
-          "type" : "PropLista"
-        },
-        "veiculoID" : {
-          "type" : "integer",
-          "format" : "int64"
-        },
-        "usuarioED" : {
-          "type" : "UsuarioED"
-        },
-        "nome" : {
-          "type" : "string"
-        },
-        "id" : {
-          "type" : "integer",
-          "format" : "int64"
-        },
-        "delete" : {
-          "type" : "boolean"
         }
       }
     }

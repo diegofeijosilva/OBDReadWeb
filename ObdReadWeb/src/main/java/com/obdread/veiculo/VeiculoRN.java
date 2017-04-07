@@ -1,8 +1,11 @@
 package com.obdread.veiculo;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
+import com.obdread.ed.UsuarioED;
 import com.obdread.ed.VeiculoED;
 import com.obdread.infra.AppRN;
 
@@ -31,4 +34,7 @@ public class VeiculoRN extends AppRN<VeiculoED, Long> {
     return super.altera(ed);
   }
 
+  public List<VeiculoED> listaVeiculosUsusario (UsuarioED usuarioED) {
+    return bd.listaVeiculosUsusario(usuarioED);
+  }
 }

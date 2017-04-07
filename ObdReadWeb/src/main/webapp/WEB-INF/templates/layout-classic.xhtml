@@ -12,8 +12,8 @@
 	<h:outputScript name="applib.js" library="js"/>
 	<h:outputStylesheet name="default.css" library="css" />
 	<p:ajaxStatus onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"/>  
-	<p:dialog modal="true" widgetVar="statusDialog" header="Processando, aguarde" draggable="false" closable="true">  
-    	<p:graphicImage value="/resources/image/ajaxloadingbar.gif" />  
+	<p:dialog modal="true" widgetVar="statusDialog" header="Processando, aguarde" draggable="false" closable="true" width="250px" height="50px">  
+    	<p:graphicImage value="/resources/image/ajaxloadingbar.gif" width="250px" height="50px"/>  
 	</p:dialog>
     <p:layout fullPage="true" gutter="0">
         <p:layoutUnit position="north" size="65" spacing="0" resizable="false" closable="false" gutter="0" collapsible="true">
