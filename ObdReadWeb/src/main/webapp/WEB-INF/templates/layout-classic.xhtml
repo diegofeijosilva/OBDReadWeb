@@ -13,23 +13,25 @@
 	<h:outputStylesheet name="default.css" library="css" />
 	<p:ajaxStatus onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"/>  
 	<p:dialog modal="true" widgetVar="statusDialog" header="Processando, aguarde" draggable="false" closable="true">  
-    	<p:graphicImage value="/resources/image/ajaxloadingbar_old2.gif" />  
+    	<p:graphicImage value="/resources/image/ajaxloadingbar.gif" />  
 	</p:dialog>
     <p:layout fullPage="true" gutter="0">
         <p:layoutUnit position="north" size="65" spacing="0" resizable="false" closable="false" gutter="0" collapsible="true">
 			<div id="logo">
-				<a href="#{request.contextPath}/"><p:graphicImage value="/resources/image/logo-topo.png" title="#{msg['label.nome-sistema']} - #{buildVersion} - #{buildTimestamp}" /></a>
+				<a href="#{request.contextPath}/">
+				   <p:graphicImage value="/resources/image/logo-topo.png" title="#{msg['label.nome-sistema']} - #{msg['build.version']}" width="50px" height="50px"/>
+				</a>
 			</div>
 			<div id="user">
 	        	<h:panelGrid columns="2" styleClass="ui-widget" >
-		            <p:outputLabel value="#{msg['label.usuario']}: " />
-		            <p:outputLabel value="#{sessionMB.user.nome} - #{sessionMB.user.properties['setor']}" />
+		            <p:outputLabel value="Usuário: " />
+		            <p:outputLabel value="#{sessionMB.usuarioLogado.email}" />
 	        	</h:panelGrid>
 	        </div>
 			<div id="icons">
         		<h:form >
         			<p:commandLink id="alteraSenha" onclick="PF('senha').show(); return false;" styleClass="bt-altera-senha" title="Alterar a senha" />  
-   	    			<p:commandLink id="logout" action="#{logonFormMB.logoff()}" ajax="false" styleClass="bt-logoff" title="Sair do sistema" />
+   	    			<p:commandLink id="logout" action="#{logonFormMB.doLogout}" ajax="false" styleClass="bt-logoff" title="Sair do sistema" />
 	       		</h:form>
         	</div>
         </p:layoutUnit>  
@@ -44,9 +46,7 @@
         	<ui:insert name="body" />
         </p:layoutUnit>  
     </p:layout>
-<!--     <p:dialog widgetVar="senha" modal="true" width="350" header="Alterar senha" resizable="false" rendered="#{sessionMB.logged}"> -->
-<!--     	<ui:include src="/senha-form.xhtml" /> -->
-<!--     </p:dialog> -->
+
     <p:growl showDetail="true" globalOnly="true" autoUpdate="true" showSummary="false" />
 </h:body>
 </f:view>

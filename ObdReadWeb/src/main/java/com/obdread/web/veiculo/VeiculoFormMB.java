@@ -1,27 +1,34 @@
 package com.obdread.web.veiculo;
 
 import javax.annotation.PostConstruct;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpSession;
 
 import org.omnifaces.cdi.ViewScoped;
 
-import com.obdread.ed.UsuarioED;
+import com.obdread.ed.VeiculoED;
 import com.obdread.infra.AppFormMB;
-import com.obdread.usuario.UsuarioRN;
+import com.obdread.security.SessionMB;
+import com.obdread.veiculo.VeiculoRN;
+import com.obdread.web.logon.LogonFormMB;
 
 @Named
 @ViewScoped
-public class VeiculoMB extends AppFormMB<UsuarioED, Long> {
+public class VeiculoFormMB extends AppFormMB<VeiculoED, Long> {
 
   private static final long serialVersionUID = 1L;
 
   @Inject
-  UsuarioRN                 usuarioRN;
+  VeiculoRN                 veiculoRN;
+
+  @Inject
+  SessionMB                     logon;
 
   @PostConstruct
   void initRN() {
-    super.setRN(usuarioRN);
+    super.setRN(veiculoRN);
   }
 
   @Override
@@ -32,9 +39,18 @@ public class VeiculoMB extends AppFormMB<UsuarioED, Long> {
   }
 
   @Override
-  public UsuarioED criaED() {
-    UsuarioED ed = new UsuarioED();
+  public VeiculoED criaED() {
+    VeiculoED ed = new VeiculoED();
     return ed;
+  }
+
+  @Override
+  public void salva() {
+
+    // Pega o usuário logado no sistema
+    super.getEd().setUsuarioED(logon.getUsuarioLogado());
+
+    super.salva();
   }
 
   //    // NÃO EXECUTA SE FOR AJAX

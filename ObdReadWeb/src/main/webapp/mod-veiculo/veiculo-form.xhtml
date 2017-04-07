@@ -1,0 +1,53 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/WEB-INF/templates/layout-classic.xhtml">
+
+	<ui:define name="body">
+
+		<f:metadata>
+			<f:viewParam name="id" value="#{veiculoFormMB.id}"
+				converter="javax.faces.Long" />
+		</f:metadata>
+
+		<f:event type="preRenderView" listener="#{veiculoFormMB.init}" />
+
+		<h:form id="form" onkeypress="return event.keyCode != 13">
+			<p:panel
+				header="#{veiculoFormMB.inclusao == true ? 'Novo - Texto Ofício' : 'Editar - Texto Ofício'}">
+
+				<p:messages id="messages" showDetail="true" autoUpdate="true"
+					closable="true" globalOnly="true" />
+
+				<p:commandButton icon="ui-icon-disk" value="Salvar"
+					action="#{veiculoFormMB.salva}" update="@form" />
+
+
+				<p:commandButton value="Voltar"
+					action="veiculo-list?faces-redirect=true" process="@this"
+					icon="ui-icon-close" />
+
+				<p:separator />
+				<p:tabView dynamic="true" cache="false">
+					<p:tab title="Geral" id="tabGeral">
+						<h:panelGrid columns="4">
+
+							<p:outputLabel for="nome" value="Nome: " />
+							<p:inputText id="nome" value="#{veiculoFormMB.ed.nome}" size="50"
+								maxlength="50" style="text-transform: uppercase" required="true" />
+							<p:message for="nome" />
+							<p:outputLabel value="" />
+
+						</h:panelGrid>
+					</p:tab>
+				</p:tabView>
+			</p:panel>
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

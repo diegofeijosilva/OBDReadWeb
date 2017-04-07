@@ -18,20 +18,15 @@
 
 				<p:toolbar id="botoesPanel">
 					<f:facet name="left">
-						<p:commandButton value="Novo"
-							icon="ui-icon-document"
-							action="junta-cronograma-form?faces-redirect=true" ajax="false"
+						<p:commandButton value="Novo" icon="ui-icon-document"
+							action="veiculo-form?faces-redirect=true" ajax="false"
 							rendered="true" />
 
-						<p:commandButton value="Pesquisar"
-							icon="ui-icon-search" process="@this"
+						<p:commandButton value="Pesquisar" icon="ui-icon-search"
+							process="@this"
 							oncomplete="PF('pesquisarJuntaCronograma').show();"
 							rendered="true" />
 
-<!-- 						<p:commandButton value="ConfiguraÃ§Ãµes" icon="ui-icon-wrench" -->
-<!-- 							process="@this" -->
-<!-- 							oncomplete="PF('configuracoesCronograma').show();" -->
-<!-- 							rendered="#{sessionMB.hasPermission('GID','CRONOGRAMA-JUN','CFG')}" /> -->
 					</f:facet>
 
 				</p:toolbar>
@@ -39,28 +34,21 @@
 				<p:separator />
 
 				<p:dataTable id="lista" var="entity" rowKey="#{entity.id}"
-					value="#{veiculoListMB.listaVeiculos}" rows="25"
-					paginator="true" lazy="true"
+					value="#{veiculoListMB.listaVeiculos}" rows="10" paginator="true"
 					paginatorTemplate="#{msg['datatable.paginatorTemplate']}"
+                    emptyMessage="#{msg['datatable.norecordsfound']}"
 					currentPageReportTemplate="#{msg['datatable.pageReportTemplate']}"
-					rowsPerPageTemplate="25,50,100" pageLinks="5"
-					paginatorPosition="bottom"
-					
-					sortBy="#{entity.id}" sortOrder="ascending"
-					emptyMessage="Sem Registros">
+                    rowsPerPageTemplate="5,10,15"
+					paginatorPosition="bottom" sortBy="#{entity.id}"
+					sortOrder="ascending">
 
-					<p:column sortBy="#{entity.id}"
-						style="width: 180px;">
-						<f:facet name="header">
-							<h:outputText value="Veículo" />
-						</f:facet>
-						<h:link value="#{entity.nome}"
-							outcome="#{cronogramaListMB.redirectCronogramaEditar(entity)}">
+					<!-- Nome Veiculo -->
+					<p:column headerText="Veiculo" width="115"
+						style="text-align: left;">
+						<h:link value="#{entity.nome}" outcome="veiculo-form.xhtml">
 							<f:param name="id" value="#{entity.id}" />
 						</h:link>
 					</p:column>
-
-					
 
 				</p:dataTable>
 

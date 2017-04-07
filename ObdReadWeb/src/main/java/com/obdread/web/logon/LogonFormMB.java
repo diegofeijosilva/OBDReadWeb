@@ -39,9 +39,9 @@ public class LogonFormMB implements Serializable {
 
   @Inject
   UsuarioRN         usuarioRN;
-  
+
   @Inject
-  Logger logger;
+  Logger            logger;
 
   //True se usuário está logado e false caso contrário
   private boolean   loggedIn;
@@ -56,15 +56,7 @@ public class LogonFormMB implements Serializable {
 
   @PostConstruct
   public void init() {
-    //    urlEsqueciSenha = Propriedades.getInstance("SOE").getValor("soe.esqsen.url");
-    //    HttpServletRequest request = FacesUtil.getRequest(FacesUtil.getContext());
-    //    privateKey = request.getServletContext().getInitParameter(Captcha.PRIVATE_KEY);
-    //    publicKey = request.getServletContext().getInitParameter(Captcha.PUBLIC_KEY);
-    //    loadAssinadorConfig(request);
-    //    loadCookieValues(request);
-    //		loadTipoDocumentos();
-    //		loadMessages(request);
-    //		defineFocus(request);
+
   }
 
   //Realiza o login caso de tudo certo
@@ -87,13 +79,12 @@ public class LogonFormMB implements Serializable {
       //para a página index.xhtml
       loggedIn = true;
       usuarioLogado = usuarioFound;
-      
+
       logger.debug("Usuário logado.");
-      
+
       HttpSession ses = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
       ses.setAttribute("logonFormMB", this);
-      
-      
+
       //return "/index.xhtml?faces-redirect=true";
       return "/index.xhtml";
     }
@@ -108,9 +99,12 @@ public class LogonFormMB implements Serializable {
     //logado
     usuarioLogado = null;
     loggedIn = false;
-    //Mostramos um mensagem ao usuário e redirecionamos ele para a         //página de login
-    //addInfoMessage("Logout realizado com sucesso !");
-    return "/login.xhtml?faces-redirect=true";
+
+    // Finaliza a Sessão
+    HttpSession ses = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+    ses.setAttribute("logonFormMB", null);
+
+    return "/mod-login/login.xhtml?faces-redirect=true";
   }
 
   public boolean isLoggedIn() {
