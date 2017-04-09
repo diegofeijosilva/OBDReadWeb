@@ -35,6 +35,10 @@ public class UsuarioRN extends AppRN<UsuarioED, Long> {
 
     ed.setSenha(utilRN.convertStringToSHA256(ed.getSenha()));
     ed.setTicket(utilRN.geradorTicket(ed));
+    
+    if(bd.findByEmail(ed) != null)
+    	return null;
+    
     return super.inclui(ed);
   }
 

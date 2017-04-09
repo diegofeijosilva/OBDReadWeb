@@ -12,131 +12,149 @@ import org.omnifaces.cdi.ViewScoped;
 import org.slf4j.Logger;
 
 import com.obdread.ed.UsuarioED;
+import com.obdread.ed.VeiculoED;
+import com.obdread.infra.AppFormMB;
 import com.obdread.infra.FacesUtil;
 import com.obdread.usuario.UsuarioRN;
 
 /**
  * Managed Bean para suporte as páginas de logon e alteração de senha.
  * 
- * @author 
+ * @author
  *
  */
 @Named
 @ViewScoped
-public class LogonFormMB implements Serializable {
+public class LogonFormMB extends AppFormMB<UsuarioED, Long> {
 
-  //  @Inject
-  //  Event<LogonEvent> logonEvent;
-  //	
-  //	@Inject
-  //	ApplicationProperties applicationProperties;
-  //	
-  //	@Inject
-  //	MessageProvider messageProvider;
-  //	
-  //	@Inject
-  //	Logger logger;
+	// @Inject
+	// Event<LogonEvent> logonEvent;
+	//
+	// @Inject
+	// ApplicationProperties applicationProperties;
+	//
+	// @Inject
+	// MessageProvider messageProvider;
+	//
+	// @Inject
+	// Logger logger;
 
-  @Inject
-  UsuarioRN         usuarioRN;
+	@Inject
+	UsuarioRN usuarioRN;
 
-  @Inject
-  Logger            logger;
+	@Inject
+	Logger logger;
 
-  //True se usuário está logado e false caso contrário
-  private boolean   loggedIn;
+	// True se usuário está logado e false caso contrário
+	private boolean loggedIn;
 
-  //Armazena o usuário logado
-  private UsuarioED usuarioLogado;
+	// Armazena o usuário logado
+	private UsuarioED usuarioLogado;
 
-  //Email e senha digitado pelo usuário na página XHTML
-  private String    email, senha;
+	// Email e senha digitado pelo usuário na página XHTML
+	private String email, senha;
 
-  // Actions
+	// Actions
 
-  @PostConstruct
-  public void init() {
+	@PostConstruct
+	public void init() {
+	    // TODO Auto-generated method stub
+	    super.init();
+	}
 
-  }
+	@Override
+	public UsuarioED criaED() {
+		UsuarioED ed = new UsuarioED();
+		return ed;
+	}
 
-  //Realiza o login caso de tudo certo
-  public String doLogin() {
+	// Realiza o login caso de tudo certo
+	public String doLogin() {
 
-    //Verifica se o e-mail e senha existem e se o usuario pode logar          
-    UsuarioED usuarioFound = usuarioRN.isUsuarioReadyToLogin(email, senha);
+		// Verifica se o e-mail e senha existem e se o usuario pode logar
+		UsuarioED usuarioFound = usuarioRN.isUsuarioReadyToLogin(email, senha);
 
-    //Caso não tenha retornado nenhum usuario, então mostramos um erro
-    //e redirecionamos ele para a página login.xhtml              
-    //para ele realiza-lo novamente          
-    if (usuarioFound == null) {
-      FacesUtil.addErrorMessage("Email ou Senha errado, tente novamente !");
-      FacesContext.getCurrentInstance().validationFailed();
-      return "/login.xhtml?faces-redirect=true";
-    } else {
-      //caso tenha retornado um usuario, setamos a variável loggedIn      
-      //como true e guardamos o usuario encontrado na variável 
-      //usuarioLogado. Depois de tudo, mandamos o usuário 
-      //para a página index.xhtml
-      loggedIn = true;
-      usuarioLogado = usuarioFound;
+		// Caso não tenha retornado nenhum usuario, então mostramos um erro
+		// e redirecionamos ele para a página login.xhtml
+		// para ele realiza-lo novamente
+		if (usuarioFound == null) {
+			FacesUtil.addErrorMessage("Email ou Senha errado, tente novamente !");
+			FacesContext.getCurrentInstance().validationFailed();
+			return "/login.xhtml?faces-redirect=true";
+		} else {
+			// caso tenha retornado um usuario, setamos a variável loggedIn
+			// como true e guardamos o usuario encontrado na variável
+			// usuarioLogado. Depois de tudo, mandamos o usuário
+			// para a página index.xhtml
+			loggedIn = true;
+			usuarioLogado = usuarioFound;
 
-      logger.debug("Usuário logado.");
+			logger.debug("Usuário logado.");
 
-      HttpSession ses = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-      ses.setAttribute("logonFormMB", this);
+			HttpSession ses = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+			ses.setAttribute("logonFormMB", this);
 
-      //return "/index.xhtml?faces-redirect=true";
-      return "/index.xhtml";
-    }
-  }
+			// return "/index.xhtml?faces-redirect=true";
+			return "/index.xhtml";
+		}
+	}
 
-  //Realiza o logout do usuário logado
-  public String doLogout() {
+	// Realiza o logout do usuário logado
+	public String doLogout() {
 
-    //Setamos a variável usuarioLogado como nulo, ou seja, limpamos
-    //os dados do usuário que estava logado e depois setamos a variável
-    //loggedIn como false para sinalizar que o usuário não está mais           
-    //logado
-    usuarioLogado = null;
-    loggedIn = false;
+		// Setamos a variável usuarioLogado como nulo, ou seja, limpamos
+		// os dados do usuário que estava logado e depois setamos a variável
+		// loggedIn como false para sinalizar que o usuário não está mais
+		// logado
+		usuarioLogado = null;
+		loggedIn = false;
 
-    // Finaliza a Sessão
-    HttpSession ses = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-    ses.setAttribute("logonFormMB", null);
+		// Finaliza a Sessão
+		HttpSession ses = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		ses.setAttribute("logonFormMB", null);
 
-    return "/mod-login/login.xhtml?faces-redirect=true";
-  }
+		return "/mod-login/login.xhtml?faces-redirect=true";
+	}
 
-  public boolean isLoggedIn() {
-    return loggedIn;
-  }
+	public void criaNovoUsuario() {
+		if(usuarioRN.inclui(super.getEd()) == null){
+			FacesUtil.addErrorMessage("O usuário informado já existe no sistema!");
+			return;
+		}
 
-  public void setLoggedIn(boolean loggedIn) {
-    this.loggedIn = loggedIn;
-  }
+		FacesUtil.addInfoMessage("Usuário criado com sucesso!");
+	}
 
-  public UsuarioED getUsuarioLogado() {
-    return usuarioLogado;
-  }
+	public boolean isLoggedIn() {
+		return loggedIn;
+	}
 
-  public void setUsuarioLogado(UsuarioED usuarioLogado) {
-    this.usuarioLogado = usuarioLogado;
-  }
+	public void setLoggedIn(boolean loggedIn) {
+		this.loggedIn = loggedIn;
+	}
 
-  public String getEmail() {
-    return email;
-  }
+	public UsuarioED getUsuarioLogado() {
+		return usuarioLogado;
+	}
 
-  public void setEmail(String email) {
-    this.email = email;
-  }
+	public void setUsuarioLogado(UsuarioED usuarioLogado) {
+		this.usuarioLogado = usuarioLogado;
+	}
 
-  public String getSenha() {
-    return senha;
-  }
+	public String getEmail() {
+		return email;
+	}
 
-  public void setSenha(String senha) {
-    this.senha = senha;
-  }
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
 
 }

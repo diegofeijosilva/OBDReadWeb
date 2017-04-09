@@ -11,6 +11,9 @@
 			href="#{request.contextPath}/resources/image/favicon.ico" />
 		<title>ObdRead - Módulo WEB</title>
 	</h:head>
+	
+	<f:event type="preRenderView" listener="#{logonFormMB.init}" />
+	
 	<h:body>
 		<h:outputScript name="applib.js" library="js" />
 		<h:outputStylesheet name="default.css" library="css" />
@@ -38,8 +41,7 @@
 
 								<p:outputLabel for="email" value="Email" />
 								<p:inputText id="email" required="true" size="25"
-									value="#{logonFormMB.email}"
-									validatorMessage="#{msg['constraints.number.invalid']}">
+									value="#{logonFormMB.email}">
 
 								</p:inputText>
 								<p:message for="email" display="icon" />
@@ -72,20 +74,18 @@
 
 								<p:outputLabel for="email" value="Email" />
 								<p:inputText id="email" required="true" size="25"
-									value="#{logonFormMB.email}"
-									validatorMessage="#{msg['constraints.number.invalid']}">
-									<f:validateRegex pattern="[0-9]*" />
+									value="#{logonFormMB.ed.email}">
 								</p:inputText>
 								<p:message for="email" display="icon" />
 
 								<p:outputLabel for="senha" value="Senha" />
 								<p:password id="senha" required="true" size="10"
-									value="#{logonFormMB.senha}" />
+									value="#{logonFormMB.ed.senha}" />
 								<p:message for="senha" display="icon" />
 
 								<f:facet name="footer">
 									<p:commandButton id="ok" value="Criar Novo Usuário"
-										action="#{logonFormMB.logonOrganizacao}" partialSubmit="true"
+										action="#{logonFormMB.criaNovoUsuario}" partialSubmit="true"
 										process="@form" update="@form" />
 									<p:commandButton value="Limpar"
 										action="#{logonFormMB.limpaOrganizacao}" immediate="true"
