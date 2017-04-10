@@ -1,6 +1,7 @@
 package com.obdread.ed;
 
 import java.io.Serializable;
+import java.util.Calendar;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.obdread.infra.AppED;
 
@@ -33,6 +36,20 @@ public class VeiculoED extends AppED<Long> implements Serializable {
 
   @Column(name = "NOME")
   private String            nome;
+  
+  @Column(name = "MODELO")
+  private String            modelo;
+  
+  @Column(name = "ANO_FABRICACAO")
+  private String            anoFabricacao;
+  
+  @Column(name = "DTH_ULT_TROCA_OLEO")
+  @Temporal(TemporalType.TIMESTAMP)
+  private Calendar          dthUltTrocaOleo;
+  
+  @Column(name = "DTH_ULT_REVISAO")
+  @Temporal(TemporalType.TIMESTAMP)
+  private Calendar          dthUltRevisao;
 
   @Override
   public Long getId() {
@@ -62,5 +79,7 @@ public class VeiculoED extends AppED<Long> implements Serializable {
   public void setNome(String nome) {
     this.nome = nome;
   }
+  
+  
 
 }

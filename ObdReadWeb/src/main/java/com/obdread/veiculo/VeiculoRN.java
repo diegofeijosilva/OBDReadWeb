@@ -7,6 +7,7 @@ import javax.inject.Inject;
 
 import com.obdread.ed.UsuarioED;
 import com.obdread.ed.VeiculoED;
+import com.obdread.exception.RNException;
 import com.obdread.infra.AppRN;
 
 @Stateless
@@ -35,6 +36,8 @@ public class VeiculoRN extends AppRN<VeiculoED, Long> {
   }
 
   public List<VeiculoED> listaVeiculosUsusario (UsuarioED usuarioED) {
+    if(usuarioED == null)
+      throw new RNException(this.getClass()+": Informar o usuário");
     return bd.listaVeiculosUsusario(usuarioED);
   }
 }

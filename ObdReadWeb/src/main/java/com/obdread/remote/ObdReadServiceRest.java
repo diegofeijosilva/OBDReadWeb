@@ -19,11 +19,14 @@ import javax.ws.rs.core.Response.Status;
 
 import org.apache.http.HttpStatus;
 
+import com.obdread.ed.LogVeiculoED;
 import com.obdread.ed.UsuarioED;
 import com.obdread.ed.VeiculoED;
+import com.obdread.ed.rest.LogVeiculoTypeED;
 import com.obdread.ed.rest.ObdType;
 import com.obdread.ed.rest.VeiculoTypeED;
 import com.obdread.exception.RNException;
+import com.obdread.logveiculo.LogVeiculoRN;
 import com.obdread.usuario.UsuarioRN;
 import com.obdread.veiculo.VeiculoRN;
 
@@ -31,13 +34,16 @@ import com.obdread.veiculo.VeiculoRN;
 @Produces(MediaType.APPLICATION_JSON)
 @AccessTimeout(value = 60, unit = TimeUnit.SECONDS)
 public class ObdReadServiceRest {
-  
+
   @Inject
-  UsuarioRN usuarioRN;
-  
+  UsuarioRN    usuarioRN;
+
   @Inject
-  VeiculoRN veiculoRN;
-  
+  VeiculoRN    veiculoRN;
+
+  @Inject
+  LogVeiculoRN logVeiculoRN;
+
   /**
    * Método para verificar se serviço está respondendo
    * 
@@ -47,10 +53,10 @@ public class ObdReadServiceRest {
   @Produces(MediaType.TEXT_PLAIN)
   public Response status() {
     String dataHoraAtual = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SSS").format(Calendar.getInstance().getTime());
-    
+
     return Response.ok("[" + dataHoraAtual + "] - Serviço Online.").build();
   }
-  
+
   /**
    * Recebe os dados vindos da aplicação Android
    * @responseMessage 403 erro Usuario não autorizado
@@ -61,23 +67,23 @@ public class ObdReadServiceRest {
   @Path("/recebeDados")
   @Produces(MediaType.APPLICATION_JSON)
   public Response recebeDados(ObdType dados) {
-    
-    if(dados.getHashUser().equals(""))
+
+    if (dados.getHashUser().equals(""))
       return Response.ok("Veiculo não encontrado!", MediaType.APPLICATION_JSON).build();
-    
+
     UsuarioED usuarioED = usuarioRN.bucaUsuarioTicket(dados.getHashUser());
-    
-    if(dados.getIdVeiculo().equals(0))
+
+    if (dados.getIdVeiculo().equals(0))
       //return Response.status(HttpStatus.SC_NOT_FOUND).entity("Veiculo não encontrado!").build();
       return Response.status(Status.BAD_REQUEST).entity("Veiculo não encontrado!").build();
-    
+
     VeiculoED veiculoED = veiculoRN.consulta(dados.getIdVeiculo());
-    
+
     if (usuarioED == null || veiculoED == null)
       return Response.status(HttpStatus.SC_NOT_FOUND).entity("Usuario ou Veiculo não encontrado!").build();
-    
+
     return Response.ok(dados, MediaType.APPLICATION_JSON).build();
-   // return Response.ok(dados).build();
+    // return Response.ok(dados).build();
   }
 
   /**
@@ -92,22 +98,51 @@ public class ObdReadServiceRest {
   public List<VeiculoTypeED> consulta(@HeaderParam("hashUser") String hashUser) {
 
     UsuarioED usuarioED = usuarioRN.bucaUsuarioTicket(hashUser);
-    
+
     if (usuarioED == null)
       throw new RNException("Dados Inválidos!");
-    
+
     List<VeiculoTypeED> listaVeiculoType = new ArrayList<VeiculoTypeED>();
-    for (VeiculoED ed : veiculoRN.listaVeiculosUsusario(usuarioED)){
+    for (VeiculoED ed : veiculoRN.listaVeiculosUsusario(usuarioED)) {
       VeiculoTypeED veiEd = new VeiculoTypeED();
       veiEd.setIdVeiculo(ed.getId());
       veiEd.setNome(ed.getNome());
-      
+
       listaVeiculoType.add(veiEd);
     }
-    
+
     return listaVeiculoType;
   }
-  
-  
+
+  /**
+   * Lista os logs do(s) veiculo(s) do Usuário
+   * @responseMessage 403 erro Usuario não autorizado
+   * @status 404 Transacao não encontrada!
+   * @status 500 Erro interno -
+   */
+  @GET
+  @Path("/listaLogsVeiculos")
+  @Produces(MediaType.APPLICATION_JSON)
+  public List<LogVeiculoTypeED> consultaLogsVeiculos(@HeaderParam("hashUser") String hashUser) {
+
+    UsuarioED usuarioED = usuarioRN.bucaUsuarioTicket(hashUser);
+
+    if (usuarioED == null)
+      throw new RNException("Dados Inválidos!");
+
+    List<LogVeiculoTypeED> listaLogs = new ArrayList<LogVeiculoTypeED>();
+
+    for (LogVeiculoED ed : logVeiculoRN.listaLogUsusario(usuarioED)) {
+      LogVeiculoTypeED edLog = new LogVeiculoTypeED();
+
+      edLog.setIdVeiculo(ed.getId());
+      edLog.setTipo(ed.getTipoLog());
+      edLog.setDescricao(ed.getDescricao());
+
+      listaLogs.add(edLog);
+    }
+
+    return listaLogs;
+  }
 
 }
