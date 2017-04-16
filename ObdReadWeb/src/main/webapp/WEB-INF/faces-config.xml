@@ -5,14 +5,18 @@
 	version="2.0">
 
 	<application>
-		<message-bundle>
-	  		messages
-		</message-bundle>
+		<message-bundle>messages</message-bundle>
 
 		<resource-bundle>
 			<base-name>messages</base-name>
 			<var>msg</var>
 		</resource-bundle>
 	</application>
-	
+
+	<converter>
+		<converter-for-class>java.util.Date</converter-for-class>
+		<converter-class>com.obdread.jsf.conversor.ConverteData</converter-class>
+	</converter>
+
+
 </faces-config>

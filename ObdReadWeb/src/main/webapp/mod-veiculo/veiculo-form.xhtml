@@ -17,7 +17,7 @@
 
 		<h:form id="form" onkeypress="return event.keyCode != 13">
 			<p:panel
-				header="#{veiculoFormMB.inclusao == true ? 'Novo - Texto Ofício' : 'Editar - Texto Ofício'}">
+				header="#{veiculoFormMB.inclusao == true ? 'Novo - Veículo' : 'Editar - Veículo'}">
 
 				<p:messages id="messages" showDetail="true" autoUpdate="true"
 					closable="true" globalOnly="true" />
@@ -40,6 +40,28 @@
 								maxlength="50" style="text-transform: uppercase" required="true" />
 							<p:message for="nome" />
 							<p:outputLabel value="" />
+
+							<p:outputLabel for="anoFabricacao" value="Ano Fabricação: " />
+							<p:selectOneMenu id="anoFabricacao"
+								value="#{veiculoFormMB.ed.anoFabricacao}" style="width:125px">
+								<f:selectItem itemLabel="Selecione..." itemValue="" />
+								<f:selectItems value="#{veiculoFormMB.listaAnosFabricacao}" />
+							</p:selectOneMenu>
+							<p:message for="anoFabricacao" />
+							<p:outputLabel value="" />
+
+
+							<p:outputLabel for="dthUltRevisao" value="Ult. Revisão: " />
+							<p:calendar id="dthUltRevisao"
+								value="#{veiculoFormMB.ed.dthUltRevisao}" showOn="button"
+								pattern="dd/MM/yyyy" converter="converteData">	
+								
+							</p:calendar>
+							<p:message for="dthUltRevisao" />
+							<p:outputLabel value="" />
+
+
+
 
 						</h:panelGrid>
 					</p:tab>

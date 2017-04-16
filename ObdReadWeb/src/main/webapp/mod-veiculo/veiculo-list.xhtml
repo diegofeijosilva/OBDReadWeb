@@ -36,11 +36,10 @@
 				<p:dataTable id="lista" var="entity" rowKey="#{entity.id}"
 					value="#{veiculoListMB.listaVeiculos}" rows="10" paginator="true"
 					paginatorTemplate="#{msg['datatable.paginatorTemplate']}"
-                    emptyMessage="#{msg['datatable.norecordsfound']}"
+					emptyMessage="#{msg['datatable.norecordsfound']}"
 					currentPageReportTemplate="#{msg['datatable.pageReportTemplate']}"
-                    rowsPerPageTemplate="5,10,15"
-					paginatorPosition="bottom" sortBy="#{entity.id}"
-					sortOrder="ascending">
+					rowsPerPageTemplate="5,10,15" paginatorPosition="bottom"
+					sortBy="#{entity.id}" sortOrder="ascending">
 
 					<!-- Nome Veiculo -->
 					<p:column headerText="Veiculo" width="115"
@@ -48,6 +47,26 @@
 						<h:link value="#{entity.nome}" outcome="veiculo-form.xhtml">
 							<f:param name="id" value="#{entity.id}" />
 						</h:link>
+					</p:column>
+
+					<!-- Ano Fabricação -->
+					<p:column headerText="Ano Fabricação" width="115"
+						style="text-align: center;">
+						<h:outputText value="#{entity.anoFabricacao}" />
+					</p:column>
+
+					<!-- Ultima Revisao -->
+					<p:column headerText="Ult.Revisão" width="115"
+						style="text-align: center;">
+						<h:outputText value="#{entity.dthUltRevisaoFormat()}">
+						
+						</h:outputText>
+					</p:column>
+
+					<!-- Ultima Troca Óleo -->
+					<p:column headerText="Ult.Troca óleo" width="115"
+						style="text-align: center;">
+						<h:outputText value="#{entity.dthUltTrocaOleo}" />
 					</p:column>
 
 				</p:dataTable>
