@@ -19,12 +19,8 @@
 			<p:panel
 				header="#{veiculoFormMB.inclusao == true ? 'Novo - Veículo' : 'Editar - Veículo'}">
 
-				<p:messages id="messages" showDetail="true" autoUpdate="true"
-					closable="true" globalOnly="true" />
-
 				<p:commandButton icon="ui-icon-disk" value="Salvar"
 					action="#{veiculoFormMB.salva}" update="@form" />
-
 
 				<p:commandButton value="Voltar"
 					action="veiculo-list?faces-redirect=true" process="@this"
@@ -59,9 +55,6 @@
 							</p:calendar>
 							<p:message for="dthUltRevisao" />
 							<p:outputLabel value="" />
-
-
-
 
 						</h:panelGrid>
 					</p:tab>

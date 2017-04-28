@@ -13,6 +13,33 @@
       "produces" : [ "text/plain" ]
     } ]
   }, {
+    "path" : "/ObdService/listaLogsVeiculos",
+    "operations" : [ {
+      "method" : "GET",
+      "nickname" : "consultaLogsVeiculos",
+      "type" : "array",
+      "items" : {
+        "$ref" : "LogVeiculoTypeED"
+      },
+      "parameters" : [ {
+        "type" : "string",
+        "paramType" : "header",
+        "name" : "hashUser"
+      } ],
+      "summary" : "Lista os logs do(s) veiculo(s) do Usuário",
+      "responseMessages" : [ {
+        "code" : 403,
+        "message" : "erro Usuario não autorizado"
+      }, {
+        "code" : 404,
+        "message" : "Transacao não encontrada!"
+      }, {
+        "code" : 500,
+        "message" : "Erro interno -"
+      } ],
+      "produces" : [ "application/json" ]
+    } ]
+  }, {
     "path" : "/ObdService/listaVeiculos",
     "operations" : [ {
       "method" : "GET",
@@ -74,6 +101,21 @@
           "format" : "int64"
         },
         "nome" : {
+          "type" : "string"
+        }
+      }
+    },
+    "LogVeiculoTypeED" : {
+      "id" : "LogVeiculoTypeED",
+      "properties" : {
+        "tipo" : {
+          "type" : "string"
+        },
+        "idVeiculo" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "descricao" : {
           "type" : "string"
         }
       }

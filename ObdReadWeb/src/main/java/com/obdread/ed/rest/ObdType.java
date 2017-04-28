@@ -3,7 +3,8 @@ package com.obdread.ed.rest;
 import java.io.Serializable;
 
 /**
- * Classe utilizada para receber os dados vindos do android através do serviço Rest
+ * Classe utilizada para receber os dados vindos do android através do serviço
+ * Rest
  * 
  * @author diego-silva
  *
@@ -11,100 +12,100 @@ import java.io.Serializable;
 
 public class ObdType implements Serializable {
 
-  /**
-   * 
-   */
-  private static final long serialVersionUID = -9186535305608152233L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -9186535305608152233L;
 
-  /// Hash do usuário
-  private String            hashUser;
+	/// Hash do usuário
+	private String hashUser;
 
-  /// ID do Veículo
-  /// Hash do usuário
-  private Long              idVeiculo;
+	/// ID do Veículo
+	/// Hash do usuário
+	private Long idVeiculo;
 
-  private Integer           data;
-  private Integer           hora;
+	private Integer data;
+	private Integer hora;
 
-  /// Dados vindos do GPS
-  private String            latitude;
-  private String            longitude;
+	/// Dados vindos do GPS
+	private String latitude;
+	private String longitude;
 
-  /// Dados vindos da ECU
-  private String            obdRpm;
-  private String            obdVelocidade;
-  private String            obdQtdeCombustivel;
+	/// Dados vindos da ECU
+	private Long obdRpm;
+	private Long obdVelocidade;
+	private Long obdQtdeCombustivel;
 
-  public Integer getData() {
-    return data;
-  }
+	public Integer getData() {
+		return data;
+	}
 
-  public void setData(Integer data) {
-    this.data = data;
-  }
+	public void setData(Integer data) {
+		this.data = data;
+	}
 
-  public Integer getHora() {
-    return hora;
-  }
+	public Integer getHora() {
+		return hora;
+	}
 
-  public void setHora(Integer hora) {
-    this.hora = hora;
-  }
+	public void setHora(Integer hora) {
+		this.hora = hora;
+	}
 
-  public String getLatitude() {
-    return latitude;
-  }
+	public String getLatitude() {
+		return latitude;
+	}
 
-  public void setLatitude(String latitude) {
-    this.latitude = latitude;
-  }
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
 
-  public String getLongitude() {
-    return longitude;
-  }
+	public String getLongitude() {
+		return longitude;
+	}
 
-  public void setLongitude(String longitude) {
-    this.longitude = longitude;
-  }
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
+	}
 
-  public String getObdRpm() {
-    return obdRpm;
-  }
+	public String getHashUser() {
+		return hashUser;
+	}
 
-  public void setObdRpm(String obdRpm) {
-    this.obdRpm = obdRpm;
-  }
+	public void setHashUser(String hashUser) {
+		this.hashUser = hashUser;
+	}
 
-  public String getObdVelocidade() {
-    return obdVelocidade;
-  }
+	public Long getIdVeiculo() {
+		return idVeiculo;
+	}
 
-  public void setObdVelocidade(String obdVelocidade) {
-    this.obdVelocidade = obdVelocidade;
-  }
+	public void setIdVeiculo(Long idVeiculo) {
+		this.idVeiculo = idVeiculo;
+	}
 
-  public String getObdQtdeCombustivel() {
-    return obdQtdeCombustivel;
-  }
+	public Long getObdRpm() {
+		return obdRpm;
+	}
 
-  public void setObdQtdeCombustivel(String obdQtdeCombustivel) {
-    this.obdQtdeCombustivel = obdQtdeCombustivel;
-  }
+	public void setObdRpm(Long obdRpm) {
+		this.obdRpm = obdRpm;
+	}
 
-  public String getHashUser() {
-    return hashUser;
-  }
+	public Long getObdVelocidade() {
+		return obdVelocidade;
+	}
 
-  public void setHashUser(String hashUser) {
-    this.hashUser = hashUser;
-  }
+	public void setObdVelocidade(Long obdVelocidade) {
+		this.obdVelocidade = obdVelocidade;
+	}
 
-  public Long getIdVeiculo() {
-    return idVeiculo;
-  }
+	public Long getObdQtdeCombustivel() {
+		return obdQtdeCombustivel;
+	}
 
-  public void setIdVeiculo(Long idVeiculo) {
-    this.idVeiculo = idVeiculo;
-  }
+	public void setObdQtdeCombustivel(Long obdQtdeCombustivel) {
+		this.obdQtdeCombustivel = obdQtdeCombustivel;
+	}
 
 }

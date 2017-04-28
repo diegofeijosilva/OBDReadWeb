@@ -29,120 +29,112 @@ import com.obdread.exception.RNException;
 import com.obdread.logveiculo.LogVeiculoRN;
 import com.obdread.usuario.UsuarioRN;
 import com.obdread.veiculo.VeiculoRN;
+import com.obdread.veiculo.dadosveiculo.DadosVeiculoRN;
 
 @Path("/ObdService")
 @Produces(MediaType.APPLICATION_JSON)
 @AccessTimeout(value = 60, unit = TimeUnit.SECONDS)
 public class ObdReadServiceRest {
 
-  @Inject
-  UsuarioRN    usuarioRN;
+	@Inject
+	UsuarioRN usuarioRN;
 
-  @Inject
-  VeiculoRN    veiculoRN;
+	@Inject
+	VeiculoRN veiculoRN;
 
-  @Inject
-  LogVeiculoRN logVeiculoRN;
+	@Inject
+	LogVeiculoRN logVeiculoRN;
 
-  /**
-   * Método para verificar se serviço está respondendo
-   * 
-   * @return Data + Hora atual
-   */
-  @GET
-  @Produces(MediaType.TEXT_PLAIN)
-  public Response status() {
-    String dataHoraAtual = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SSS").format(Calendar.getInstance().getTime());
+	@Inject
+	DadosVeiculoRN dadosVeiculoRN;
 
-    return Response.ok("[" + dataHoraAtual + "] - Serviço Online.").build();
-  }
+	/**
+	 * Método para verificar se serviço está respondendo
+	 * 
+	 * @return Data + Hora atual
+	 */
+	@GET
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response status() {
+		String dataHoraAtual = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SSS").format(Calendar.getInstance().getTime());
+		return Response.ok("[" + dataHoraAtual + "] - Serviço Online.").build();
+	}
 
-  /**
-   * Recebe os dados vindos da aplicação Android
-   * @responseMessage 403 erro Usuario não autorizado
-   * @status 404 Transacao não encontrada!
-   * @status 500 Erro interno -
-   */
-  @POST
-  @Path("/recebeDados")
-  @Produces(MediaType.APPLICATION_JSON)
-  public Response recebeDados(ObdType dados) {
+	/**
+	 * Recebe os dados vindos da aplicação Android
+	 * 
+	 * @responseMessage 403 erro Usuario não autorizado
+	 * @status 404 Transacao não encontrada!
+	 * @status 500 Erro interno -
+	 */
+	@POST
+	@Path("/recebeDados")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response recebeDados(ObdType dados) {
+		dadosVeiculoRN.incluiDados(dados);
+		return Response.ok("OK").build();
+		// return Response.ok(, MediaType.APPLICATION_JSON).build();
+	}
 
-    if (dados.getHashUser().equals(""))
-      return Response.ok("Veiculo não encontrado!", MediaType.APPLICATION_JSON).build();
+	/**
+	 * Lista os veículos do Usuário
+	 * 
+	 * @responseMessage 403 erro Usuario não autorizado
+	 * @status 404 Transacao não encontrada!
+	 * @status 500 Erro interno -
+	 */
+	@GET
+	@Path("/listaVeiculos")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<VeiculoTypeED> consulta(@HeaderParam("hashUser") String hashUser) {
 
-    UsuarioED usuarioED = usuarioRN.bucaUsuarioTicket(dados.getHashUser());
+		UsuarioED usuarioED = usuarioRN.bucaUsuarioTicket(hashUser);
 
-    if (dados.getIdVeiculo().equals(0))
-      //return Response.status(HttpStatus.SC_NOT_FOUND).entity("Veiculo não encontrado!").build();
-      return Response.status(Status.BAD_REQUEST).entity("Veiculo não encontrado!").build();
+		if (usuarioED == null)
+			throw new RNException("Dados Inválidos!");
 
-    VeiculoED veiculoED = veiculoRN.consulta(dados.getIdVeiculo());
+		List<VeiculoTypeED> listaVeiculoType = new ArrayList<VeiculoTypeED>();
+		for (VeiculoED ed : veiculoRN.listaVeiculosUsusario(usuarioED)) {
+			VeiculoTypeED veiEd = new VeiculoTypeED();
+			veiEd.setIdVeiculo(ed.getId());
+			veiEd.setNome(ed.getNome());
 
-    if (usuarioED == null || veiculoED == null)
-      return Response.status(HttpStatus.SC_NOT_FOUND).entity("Usuario ou Veiculo não encontrado!").build();
+			listaVeiculoType.add(veiEd);
+		}
 
-    return Response.ok(dados, MediaType.APPLICATION_JSON).build();
-    // return Response.ok(dados).build();
-  }
+		return listaVeiculoType;
+	}
 
-  /**
-   * Lista os veículos do Usuário
-   * @responseMessage 403 erro Usuario não autorizado
-   * @status 404 Transacao não encontrada!
-   * @status 500 Erro interno -
-   */
-  @GET
-  @Path("/listaVeiculos")
-  @Produces(MediaType.APPLICATION_JSON)
-  public List<VeiculoTypeED> consulta(@HeaderParam("hashUser") String hashUser) {
+	/**
+	 * Lista os logs do(s) veiculo(s) do Usuário
+	 * 
+	 * @responseMessage 403 erro Usuario não autorizado
+	 * @status 404 Transacao não encontrada!
+	 * @status 500 Erro interno -
+	 */
+	@GET
+	@Path("/listaLogsVeiculos")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<LogVeiculoTypeED> consultaLogsVeiculos(@HeaderParam("hashUser") String hashUser) {
 
-    UsuarioED usuarioED = usuarioRN.bucaUsuarioTicket(hashUser);
+		UsuarioED usuarioED = usuarioRN.bucaUsuarioTicket(hashUser);
 
-    if (usuarioED == null)
-      throw new RNException("Dados Inválidos!");
+		if (usuarioED == null)
+			throw new RNException("Dados Inválidos!");
 
-    List<VeiculoTypeED> listaVeiculoType = new ArrayList<VeiculoTypeED>();
-    for (VeiculoED ed : veiculoRN.listaVeiculosUsusario(usuarioED)) {
-      VeiculoTypeED veiEd = new VeiculoTypeED();
-      veiEd.setIdVeiculo(ed.getId());
-      veiEd.setNome(ed.getNome());
+		List<LogVeiculoTypeED> listaLogs = new ArrayList<LogVeiculoTypeED>();
 
-      listaVeiculoType.add(veiEd);
-    }
+		for (LogVeiculoED ed : logVeiculoRN.listaLogUsusario(usuarioED)) {
+			LogVeiculoTypeED edLog = new LogVeiculoTypeED();
 
-    return listaVeiculoType;
-  }
+			edLog.setIdVeiculo(ed.getId());
+			edLog.setTipo(ed.getTipoLog());
+			edLog.setDescricao(ed.getDescricao());
 
-  /**
-   * Lista os logs do(s) veiculo(s) do Usuário
-   * @responseMessage 403 erro Usuario não autorizado
-   * @status 404 Transacao não encontrada!
-   * @status 500 Erro interno -
-   */
-  @GET
-  @Path("/listaLogsVeiculos")
-  @Produces(MediaType.APPLICATION_JSON)
-  public List<LogVeiculoTypeED> consultaLogsVeiculos(@HeaderParam("hashUser") String hashUser) {
+			listaLogs.add(edLog);
+		}
 
-    UsuarioED usuarioED = usuarioRN.bucaUsuarioTicket(hashUser);
-
-    if (usuarioED == null)
-      throw new RNException("Dados Inválidos!");
-
-    List<LogVeiculoTypeED> listaLogs = new ArrayList<LogVeiculoTypeED>();
-
-    for (LogVeiculoED ed : logVeiculoRN.listaLogUsusario(usuarioED)) {
-      LogVeiculoTypeED edLog = new LogVeiculoTypeED();
-
-      edLog.setIdVeiculo(ed.getId());
-      edLog.setTipo(ed.getTipoLog());
-      edLog.setDescricao(ed.getDescricao());
-
-      listaLogs.add(edLog);
-    }
-
-    return listaLogs;
-  }
+		return listaLogs;
+	}
 
 }

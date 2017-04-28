@@ -1,7 +1,6 @@
 package com.obdread.ed;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import javax.persistence.Column;
@@ -19,7 +18,6 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import com.obdread.infra.AppED;
-import com.obdread.util.UtilRN;
 
 @Entity
 @Table(name = "TBL_VEICULO")
@@ -42,27 +40,16 @@ public class VeiculoED extends AppED<Long> implements Serializable {
 	@NotNull
 	private String nome;
 
-	@Column(name = "MODELO")
-	private String modelo;
-
 	@Column(name = "ANO_FABRICACAO", length = 4)
 	private String anoFabricacao;
 
-	@Column(name = "DTH_ULT_TROCA_OLEO")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Calendar dthUltTrocaOleo;
-
 	@Column(name = "DTH_ULT_REVISAO")
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar dthUltRevisao;
 
 	@Override
 	public Long getId() {
 		return veiculoID;
-	}
-	
-	public String dthUltRevisaoFormat(){
-		return UtilRN.converteddmmyy(this.dthUltRevisao);
 	}
 
 	public Long getVeiculoID() {
@@ -89,14 +76,6 @@ public class VeiculoED extends AppED<Long> implements Serializable {
 		this.nome = nome;
 	}
 
-	public String getModelo() {
-		return modelo;
-	}
-
-	public void setModelo(String modelo) {
-		this.modelo = modelo;
-	}
-
 	public String getAnoFabricacao() {
 		return anoFabricacao;
 	}
@@ -105,20 +84,12 @@ public class VeiculoED extends AppED<Long> implements Serializable {
 		this.anoFabricacao = anoFabricacao;
 	}
 
-	public Calendar getDthUltTrocaOleo() {
-		return dthUltTrocaOleo;
-	}
-
-	public void setDthUltTrocaOleo(Calendar dthUltTrocaOleo) {
-		this.dthUltTrocaOleo = dthUltTrocaOleo;
-	}
-
 	public Calendar getDthUltRevisao() {
 		return dthUltRevisao;
 	}
 
-	public void setDthUltRevisao(Calendar dthUltRevisao) {
-		this.dthUltRevisao = dthUltRevisao;
+	public void setDthUltRevisao(Calendar dthUltTrocaOleo) {
+		this.dthUltRevisao = dthUltTrocaOleo;
 	}
 
 }
