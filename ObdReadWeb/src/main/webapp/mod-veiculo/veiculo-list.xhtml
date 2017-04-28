@@ -13,7 +13,8 @@
 		<h:form id="form">
 
 			<p:panel id="panel" header="Listagem de Veículos">
-				
+				<p:messages id="messages" showDetail="true" autoUpdate="true"
+					closable="true" />
 
 				<p:toolbar id="botoesPanel">
 					<f:facet name="left">
@@ -52,6 +53,14 @@
 					<p:column headerText="Ano Fabricação" width="115"
 						style="text-align: center;">
 						<h:outputText value="#{entity.anoFabricacao}" />
+					</p:column>
+
+					<!-- Ultima Revisao -->
+					<p:column headerText="Ult.Revisão" width="115"
+						style="text-align: center;">
+						<h:outputText value="#{entity.dthUltRevisaoFormat()}">
+						
+						</h:outputText>
 					</p:column>
 
 					<!-- Ultima Troca Óleo -->
