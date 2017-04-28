@@ -1,6 +1,7 @@
 package com.obdread.ed;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import javax.persistence.Column;
@@ -18,78 +19,92 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import com.obdread.infra.AppED;
+import com.obdread.util.UtilRN;
 
 @Entity
 @Table(name = "TBL_VEICULO")
-@NamedQueries(value = {
-		@NamedQuery(name = "VeiculoED.consulta", query = "SELECT C FROM VeiculoED C WHERE C.veiculoID = :id") })
+@NamedQueries(value = { @NamedQuery(name = "VeiculoED.consulta", query = "SELECT C FROM VeiculoED C WHERE C.veiculoID = :id") })
 public class VeiculoED extends AppED<Long> implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "VEICULO_ID")
-	private Long veiculoID;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "VEICULO_ID")
+  private Long              veiculoID;
 
-	@ManyToOne
-	@JoinColumn(name = "USUARIO_ID", referencedColumnName = "USUARIO_ID")
-	private UsuarioED usuarioED;
+  @ManyToOne
+  @JoinColumn(name = "USUARIO_ID", referencedColumnName = "USUARIO_ID")
+  private UsuarioED         usuarioED;
 
-	@Column(name = "NOME")
-	@NotNull
-	private String nome;
+  @Column(name = "NOME")
+  @NotNull
+  private String            nome;
 
-	@Column(name = "ANO_FABRICACAO", length = 4)
-	private String anoFabricacao;
+  @Column(name = "MODELO")
+  private String            modelo;
 
-	@Column(name = "DTH_ULT_REVISAO")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Calendar dthUltRevisao;
+  @Column(name = "ANO_FABRICACAO", length = 4)
+  private String            anoFabricacao;
 
-	@Override
-	public Long getId() {
-		return veiculoID;
-	}
+  @Column(name = "DTH_ULT_REVISAO")
+  private Calendar          dthUltRevisao;
 
-	public Long getVeiculoID() {
-		return veiculoID;
-	}
+  @Override
+  public Long getId() {
+    return veiculoID;
+  }
 
-	public void setVeiculoID(Long veiculoID) {
-		this.veiculoID = veiculoID;
-	}
+  public String dthUltRevisaoFormat() {
+    return UtilRN.converteddmmyy(this.dthUltRevisao);
+  }
 
-	public UsuarioED getUsuarioED() {
-		return usuarioED;
-	}
+  public Long getVeiculoID() {
+    return veiculoID;
+  }
 
-	public void setUsuarioED(UsuarioED usuarioED) {
-		this.usuarioED = usuarioED;
-	}
+  public void setVeiculoID(Long veiculoID) {
+    this.veiculoID = veiculoID;
+  }
 
-	public String getNome() {
-		return nome;
-	}
+  public UsuarioED getUsuarioED() {
+    return usuarioED;
+  }
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+  public void setUsuarioED(UsuarioED usuarioED) {
+    this.usuarioED = usuarioED;
+  }
 
-	public String getAnoFabricacao() {
-		return anoFabricacao;
-	}
+  public String getNome() {
+    return nome;
+  }
 
-	public void setAnoFabricacao(String anoFabricacao) {
-		this.anoFabricacao = anoFabricacao;
-	}
+  public void setNome(String nome) {
+    this.nome = nome;
+  }
 
-	public Calendar getDthUltRevisao() {
-		return dthUltRevisao;
-	}
+  public String getModelo() {
+    return modelo;
+  }
 
-	public void setDthUltRevisao(Calendar dthUltTrocaOleo) {
-		this.dthUltRevisao = dthUltTrocaOleo;
-	}
+  public void setModelo(String modelo) {
+    this.modelo = modelo;
+  }
+
+  public String getAnoFabricacao() {
+    return anoFabricacao;
+  }
+
+  public void setAnoFabricacao(String anoFabricacao) {
+    this.anoFabricacao = anoFabricacao;
+  }
+
+  public Calendar getDthUltRevisao() {
+    return dthUltRevisao;
+  }
+
+  public void setDthUltRevisao(Calendar dthUltRevisao) {
+    this.dthUltRevisao = dthUltRevisao;
+  }
 
 }

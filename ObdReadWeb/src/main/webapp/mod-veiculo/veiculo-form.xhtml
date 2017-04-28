@@ -50,8 +50,8 @@
 							<p:outputLabel for="dthUltRevisao" value="Ult. Revisão: " />
 							<p:calendar id="dthUltRevisao"
 								value="#{veiculoFormMB.ed.dthUltRevisao}" showOn="button"
-								pattern="dd/MM/yyyy" converter="converteData">	
-								
+								pattern="dd/MM/yyyy" locale="pt">	
+								<f:converter converterId="dateCalendarConverter" />
 							</p:calendar>
 							<p:message for="dthUltRevisao" />
 							<p:outputLabel value="" />
