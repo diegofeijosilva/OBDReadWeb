@@ -91,8 +91,71 @@
       } ],
       "produces" : [ "application/json" ]
     } ]
+  }, {
+    "path" : "/ObdService/recebeErrosEcu",
+    "operations" : [ {
+      "method" : "POST",
+      "nickname" : "recebeErrosEcu",
+      "type" : "Response",
+      "parameters" : [ {
+        "type" : "ErrosEcuType",
+        "paramType" : "body",
+        "name" : "dados",
+        "required" : true
+      } ],
+      "summary" : "Recebe os erros da ECU vindos da aplicação Android",
+      "responseMessages" : [ {
+        "code" : 403,
+        "message" : "erro Usuario não autorizado"
+      }, {
+        "code" : 404,
+        "message" : "Transacao não encontrada!"
+      }, {
+        "code" : 500,
+        "message" : "Erro interno -"
+      } ],
+      "produces" : [ "application/json" ]
+    } ]
   } ],
   "models" : {
+    "ObdType" : {
+      "id" : "ObdType",
+      "properties" : {
+        "obdRpm" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "obdQtdeCombustivel" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "data" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "hora" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "latitude" : {
+          "type" : "string"
+        },
+        "idVeiculo" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "hashUser" : {
+          "type" : "string"
+        },
+        "obdVelocidade" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "longitude" : {
+          "type" : "string"
+        }
+      }
+    },
     "VeiculoTypeED" : {
       "id" : "VeiculoTypeED",
       "properties" : {
@@ -120,25 +183,19 @@
         }
       }
     },
-    "ObdType" : {
-      "id" : "ObdType",
+    "ErrosEcuType" : {
+      "id" : "ErrosEcuType",
       "properties" : {
-        "obdRpm" : {
-          "type" : "string"
-        },
-        "obdQtdeCombustivel" : {
+        "codigo" : {
           "type" : "string"
         },
         "data" : {
           "type" : "integer",
           "format" : "int32"
         },
-        "hora" : {
+        "level" : {
           "type" : "integer",
           "format" : "int32"
-        },
-        "latitude" : {
-          "type" : "string"
         },
         "idVeiculo" : {
           "type" : "integer",
@@ -147,10 +204,7 @@
         "hashUser" : {
           "type" : "string"
         },
-        "obdVelocidade" : {
-          "type" : "string"
-        },
-        "longitude" : {
+        "descricao" : {
           "type" : "string"
         }
       }

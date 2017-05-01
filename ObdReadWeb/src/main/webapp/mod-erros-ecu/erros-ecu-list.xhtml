@@ -1,0 +1,80 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/WEB-INF/templates/layout-classic.xhtml">
+
+	<ui:define name="body">
+
+		<f:event type="preRenderView" listener="#{errosEcuListMB.init}" />
+
+		<h:form id="form">
+
+			<p:panel id="panel" header="Listagem de Erros da ECU">
+				<p:messages id="messages" showDetail="true" autoUpdate="true"
+					closable="true" />
+
+				<h:panelGrid columns="2">
+					<p:outputLabel for="veiculo" value="Veiculo: " />
+					<p:selectOneMenu id="veiculo" value="#{errosEcuListMB.veiculoED}"
+						style="width:125px" converter="veiculoConverter">
+
+						<f:selectItems value="#{errosEcuListMB.listaVeiculos}" var="var"
+							itemLabel="#{var.nome}" itemValue="#{var}" />
+
+						<p:ajax listener="#{errosEcuListMB.listaErrosEcuVeiculo}"
+							update="lista" />
+					</p:selectOneMenu>
+
+				</h:panelGrid>
+
+				<p:separator />
+
+				<p:dataTable id="lista" var="entity" rowKey="#{entity.id}"
+					value="#{errosEcuListMB.listaErros}" rows="10" paginator="true"
+					paginatorTemplate="#{msg['datatable.paginatorTemplate']}"
+					emptyMessage="#{msg['datatable.norecordsfound']}"
+					currentPageReportTemplate="#{msg['datatable.pageReportTemplate']}"
+					rowsPerPageTemplate="5,10,15" paginatorPosition="bottom"
+					sortBy="#{entity.id}" sortOrder="ascending">
+
+					<!-- Código do Erro -->
+					<p:column headerText="Código" width="10%" style="text-align: center;">
+						<h:outputText value="#{entity.codigoErro}" />
+					</p:column>
+
+					<!-- Descrição do Erro -->
+					<p:column headerText="Descrição" width="63%"
+						style="text-align: left;">
+						<h:outputText value="#{entity.descricao}" />
+					</p:column>
+
+					<!-- Data do Log -->
+					<p:column headerText="Data" width="10%" style="text-align: center;">
+						<h:outputText value="#{entity.dthLog}" />
+					</p:column>
+
+					<!-- Level do Erro -->
+					<p:column headerText="Level" width="5%"
+						style="text-align: center;">
+						<h:graphicImage value="/resources/image/LevelWarning.png" rendered="#{entity.level == 1}" width="20" height="20"/>
+						<h:graphicImage value="/resources/image/LevelInfo.png" rendered="#{entity.level == 2}" width="23" height="23"/>
+					</p:column>
+
+				</p:dataTable>
+
+			</p:panel>
+		</h:form>
+
+		<!-- 		<p:dialog header="Pesquisar Cronograma" -->
+		<!-- 			visible="#{cronogramaListMB.abreTelaPesquisa != 1}" dynamic="false" -->
+		<!-- 			modal="true" appendTo="@(body)" widgetVar="pesquisarJuntaCronograma" -->
+		<!-- 			height="40%" width="35%"> -->
+		<!-- 			<ui:include src="/mod-comissao/junta-cronograma-pesq.xhtml" /> -->
+		<!-- 		</p:dialog> -->
+
+	</ui:define>
+
+</ui:composition>

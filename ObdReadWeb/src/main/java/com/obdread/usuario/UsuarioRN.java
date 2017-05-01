@@ -65,7 +65,7 @@ public class UsuarioRN extends AppRN<UsuarioED, Long> {
   
   public UsuarioED bucaUsuarioTicket(String userTicket) {
     if (userTicket == null || userTicket.equals(""))
-      throw new RNException("Ticket é obrigatório!");
+      throw new RNException(super.getClass() + ": Ticket é obrigatório!");
 
     return bd.bucaUsuarioTicket(userTicket);
   }

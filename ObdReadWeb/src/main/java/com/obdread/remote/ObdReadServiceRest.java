@@ -22,9 +22,11 @@ import org.apache.http.HttpStatus;
 import com.obdread.ed.LogVeiculoED;
 import com.obdread.ed.UsuarioED;
 import com.obdread.ed.VeiculoED;
+import com.obdread.ed.rest.ErrosEcuType;
 import com.obdread.ed.rest.LogVeiculoTypeED;
 import com.obdread.ed.rest.ObdType;
 import com.obdread.ed.rest.VeiculoTypeED;
+import com.obdread.errosecu.ErrosEcuRN;
 import com.obdread.exception.RNException;
 import com.obdread.logveiculo.LogVeiculoRN;
 import com.obdread.usuario.UsuarioRN;
@@ -47,6 +49,9 @@ public class ObdReadServiceRest {
 
 	@Inject
 	DadosVeiculoRN dadosVeiculoRN;
+
+	@Inject
+	ErrosEcuRN errosEcuRN;
 
 	/**
 	 * Método para verificar se serviço está respondendo
@@ -72,6 +77,22 @@ public class ObdReadServiceRest {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response recebeDados(ObdType dados) {
 		dadosVeiculoRN.incluiDados(dados);
+		return Response.ok("OK").build();
+		// return Response.ok(, MediaType.APPLICATION_JSON).build();
+	}
+
+	/**
+	 * Recebe os erros da ECU vindos da aplicação Android
+	 * 
+	 * @responseMessage 403 erro Usuario não autorizado
+	 * @status 404 Transacao não encontrada!
+	 * @status 500 Erro interno -
+	 */
+	@POST
+	@Path("/recebeErrosEcu")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response recebeErrosEcu(ErrosEcuType dados) {
+		errosEcuRN.inclui(dados);
 		return Response.ok("OK").build();
 		// return Response.ok(, MediaType.APPLICATION_JSON).build();
 	}

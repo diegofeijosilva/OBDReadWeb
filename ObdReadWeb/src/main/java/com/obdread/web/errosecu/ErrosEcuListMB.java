@@ -1,0 +1,96 @@
+package com.obdread.web.errosecu;
+
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.faces.event.AjaxBehaviorEvent;
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import org.omnifaces.cdi.ViewScoped;
+
+import com.obdread.ed.ErrosEcuED;
+import com.obdread.ed.VeiculoED;
+import com.obdread.errosecu.ErrosEcuRN;
+import com.obdread.infra.AppListMB;
+import com.obdread.veiculo.VeiculoRN;
+
+@Named
+@ViewScoped
+public class ErrosEcuListMB extends AppListMB<ErrosEcuED, ErrosEcuED> {
+
+	private static final long serialVersionUID = 1L;
+
+	@Inject
+	ErrosEcuRN errosEcuRN;
+
+	@Inject
+	VeiculoRN veiculoRN;
+
+	List<ErrosEcuED> listaErros;
+	List<VeiculoED> listaVeiculos;
+	VeiculoED veiculoED;
+
+	@PostConstruct
+	void initRN() {
+		// Limpa a pesquisa
+		// limpa();
+		super.setRN(errosEcuRN);
+
+	}
+
+	@Override
+	public void init() {
+		ErrosEcuED ed = new ErrosEcuED();
+		// Lista os veículos do usuário logado na sessão
+		listaVeiculos = veiculoRN.listaVeiculosUsuarioLogado();
+		
+		if(listaVeiculos != null && listaVeiculos.size() > 0){
+			veiculoED = listaVeiculos.get(0);
+		}
+		
+		listaErros = errosEcuRN.lista(ed);
+
+		super.init();
+	}
+
+	public void listaErrosEcuVeiculo(AjaxBehaviorEvent vce) {
+		if (veiculoED != null)
+			listaErros = errosEcuRN.listaErrosEcuVeiculo(veiculoED);
+	}
+
+	@Override
+	public void limpa() {
+		// super.getPed().setUsaItensTela(true);
+		// super.getPed().setItensSituacaoSelecionados( new
+		// Integer[SituacaoCronogramaEnum.getAll().size()]);
+		// super.getPed().getItensSituacaoSelecionados()[0] = 1;
+		// super.getPed().getItensSituacaoSelecionados()[1] = 2;
+		super.limpa();
+	}
+
+	public List<ErrosEcuED> getListaErros() {
+		return listaErros;
+	}
+
+	public void setListaErros(List<ErrosEcuED> listaErros) {
+		this.listaErros = listaErros;
+	}
+
+	public List<VeiculoED> getListaVeiculos() {
+		return listaVeiculos;
+	}
+
+	public void setListaVeiculos(List<VeiculoED> listaVeiculos) {
+		this.listaVeiculos = listaVeiculos;
+	}
+
+	public VeiculoED getVeiculoED() {
+		return veiculoED;
+	}
+
+	public void setVeiculoED(VeiculoED veiculoED) {
+		this.veiculoED = veiculoED;
+	}
+
+}
