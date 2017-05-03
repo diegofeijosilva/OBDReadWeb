@@ -12,12 +12,12 @@ import com.obdread.infra.AppBD;
 
 public class ErrosEcuBD extends AppBD<ErrosEcuED, Long> {
 
-	public List<ErrosEcuED> listaErrosEcuVeiculo(VeiculoED ed) {
+	public List<ErrosEcuED> listaErrosEcuVeiculo(Long veiculoId) {
 		StringBuffer sql = new StringBuffer();
 		sql.append(" SELECT * FROM TBL_ERROS_ECU A WHERE A.VEICULO_ID = :veiculo");
 
 		Query query = super.getEntityManager().createNativeQuery(sql.toString(), ErrosEcuED.class);
-		query.setParameter("veiculo", ed.getId());
+		query.setParameter("veiculo", veiculoId);
 		try {
 			return query.getResultList();
 		} catch (NoResultException e) {

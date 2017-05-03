@@ -50,9 +50,9 @@ public class ErrosEcuRN extends AppRN<ErrosEcuED, Long> {
 		return super.inclui(ed);
 	}
 
-	public List<ErrosEcuED> listaErrosEcuVeiculo(VeiculoED ed) {
-		if(ed != null)
-			return bd.listaErrosEcuVeiculo(ed);
+	public List<ErrosEcuED> listaErrosEcuVeiculo(Long veiculoId) {
+		if(veiculoId != null)
+			return bd.listaErrosEcuVeiculo(veiculoId);
 		
 		return null;
 	}

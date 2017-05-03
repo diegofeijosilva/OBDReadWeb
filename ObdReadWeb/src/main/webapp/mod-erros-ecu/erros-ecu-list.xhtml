@@ -17,7 +17,7 @@
 				<h:panelGrid columns="2">
 					<p:outputLabel for="veiculo" value="Veiculo: " />
 					<p:selectOneMenu id="veiculo" value="#{errosEcuListMB.veiculoId}"
-						style="width:125px" converter="entityConverter">
+						style="width:125px" >
 
 						<f:selectItem itemValue="#{null}" itemLabel="Selecione..." />
 						<f:selectItems value="#{errosEcuListMB.listaVeiculos}" var="var" itemLabel="#{var.nome}" itemValue="#{var.veiculoID}" />
