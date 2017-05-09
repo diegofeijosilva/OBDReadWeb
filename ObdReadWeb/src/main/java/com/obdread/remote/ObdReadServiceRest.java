@@ -1,8 +1,6 @@
 package com.obdread.remote;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -15,9 +13,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
-
-import org.apache.http.HttpStatus;
 
 import com.obdread.ed.LogVeiculoED;
 import com.obdread.ed.UsuarioED;
@@ -25,6 +20,7 @@ import com.obdread.ed.VeiculoED;
 import com.obdread.ed.rest.ErrosEcuType;
 import com.obdread.ed.rest.LogVeiculoTypeED;
 import com.obdread.ed.rest.ObdType;
+import com.obdread.ed.rest.UsuarioType;
 import com.obdread.ed.rest.VeiculoTypeED;
 import com.obdread.errosecu.ErrosEcuRN;
 import com.obdread.exception.RNException;
@@ -58,11 +54,10 @@ public class ObdReadServiceRest {
 	 * 
 	 * @return Data + Hora atual
 	 */
-	@GET
+	@POST
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response status() {
-		String dataHoraAtual = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SSS").format(Calendar.getInstance().getTime());
-		return Response.ok("[" + dataHoraAtual + "] - Serviço Online.").build();
+		return Response.ok("OK").build();
 	}
 
 	/**
@@ -104,20 +99,21 @@ public class ObdReadServiceRest {
 	 * @status 404 Transacao não encontrada!
 	 * @status 500 Erro interno -
 	 */
-	@GET
+	@POST
 	@Path("/listaVeiculos")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<VeiculoTypeED> consulta(@HeaderParam("hashUser") String hashUser) {
-
-		UsuarioED usuarioED = usuarioRN.bucaUsuarioTicket(hashUser);
-
-		if (usuarioED == null)
-			throw new RNException("Dados Inválidos!");
+	public List<VeiculoTypeED> consulta(UsuarioType user) {
 
 		List<VeiculoTypeED> listaVeiculoType = new ArrayList<VeiculoTypeED>();
+		UsuarioED usuarioED = usuarioRN.bucaUsuarioTicket(user.getTicket());
+
+		if (usuarioED == null)
+			return listaVeiculoType;
+
+		
 		for (VeiculoED ed : veiculoRN.listaVeiculosUsusario(usuarioED)) {
 			VeiculoTypeED veiEd = new VeiculoTypeED();
-			veiEd.setIdVeiculo(ed.getId());
+			veiEd.setId(ed.getId());
 			veiEd.setNome(ed.getNome());
 
 			listaVeiculoType.add(veiEd);
@@ -156,6 +152,41 @@ public class ObdReadServiceRest {
 		}
 
 		return listaLogs;
+	}
+	
+	/**
+	 * Login para o sistema mobile
+	 * 
+	 * @responseMessage 403 erro Usuario não autorizado
+	 * @status 404 Transacao não encontrada!
+	 * @status 500 Erro interno -
+	 */
+	/**
+	 * @param email
+	 * @param senha
+	 * @return
+	 */
+	@POST
+	@Path("/login")
+	@Produces(MediaType.APPLICATION_JSON)
+	public UsuarioType login(UsuarioType user) {
+		
+		if(user == null )
+			return new UsuarioType();
+
+		UsuarioED usuarioED = usuarioRN.isUsuarioReadyToLogin(user.getEmail(), user.getSenha());
+
+		if (usuarioED != null){
+			
+			UsuarioType userRet = new UsuarioType();
+			userRet.setEmail(usuarioED.getEmail());
+			userRet.setTicket(usuarioED.getTicket());
+			
+			return userRet;
+		} else {
+			return new UsuarioType();
+		}
+
 	}
 
 }
