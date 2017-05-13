@@ -35,7 +35,7 @@ public class VeiculoListMB extends AppListMB<VeiculoED, VeiculoED> {
   public void init() {
 	  
 	  VeiculoED ed = new VeiculoED(); 
-	  listaVeiculos = veiculoRN.lista(ed);
+	  listaVeiculos = veiculoRN.listaVeiculosUsuarioLogado();
 	  
     super.init();
   }

@@ -86,10 +86,9 @@ public class ObdReadServiceRest {
 	@POST
 	@Path("/recebeErrosEcu")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response recebeErrosEcu(ErrosEcuType dados) {
+	public ErrosEcuType recebeErrosEcu(ErrosEcuType dados) {
 		errosEcuRN.inclui(dados);
-		return Response.ok("OK").build();
-		// return Response.ok(, MediaType.APPLICATION_JSON).build();
+		return dados;
 	}
 
 	/**
@@ -160,11 +159,6 @@ public class ObdReadServiceRest {
 	 * @responseMessage 403 erro Usuario não autorizado
 	 * @status 404 Transacao não encontrada!
 	 * @status 500 Erro interno -
-	 */
-	/**
-	 * @param email
-	 * @param senha
-	 * @return
 	 */
 	@POST
 	@Path("/login")

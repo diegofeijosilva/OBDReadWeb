@@ -6,7 +6,7 @@
   "apis" : [ {
     "path" : "/ObdService",
     "operations" : [ {
-      "method" : "GET",
+      "method" : "POST",
       "nickname" : "status",
       "type" : "Response",
       "summary" : "Método para verificar se serviço está respondendo",
@@ -42,16 +42,17 @@
   }, {
     "path" : "/ObdService/listaVeiculos",
     "operations" : [ {
-      "method" : "GET",
+      "method" : "POST",
       "nickname" : "consulta",
       "type" : "array",
       "items" : {
         "$ref" : "VeiculoTypeED"
       },
       "parameters" : [ {
-        "type" : "string",
-        "paramType" : "header",
-        "name" : "hashUser"
+        "type" : "UsuarioType",
+        "paramType" : "body",
+        "name" : "user",
+        "required" : true
       } ],
       "summary" : "Lista os veículos do Usuário",
       "responseMessages" : [ {
@@ -63,6 +64,20 @@
       }, {
         "code" : 500,
         "message" : "Erro interno -"
+      } ],
+      "produces" : [ "application/json" ]
+    } ]
+  }, {
+    "path" : "/ObdService/login",
+    "operations" : [ {
+      "method" : "POST",
+      "nickname" : "login",
+      "type" : "UsuarioType",
+      "parameters" : [ {
+        "type" : "UsuarioType",
+        "paramType" : "body",
+        "name" : "user",
+        "required" : true
       } ],
       "produces" : [ "application/json" ]
     } ]
@@ -159,11 +174,25 @@
     "VeiculoTypeED" : {
       "id" : "VeiculoTypeED",
       "properties" : {
-        "idVeiculo" : {
+        "nome" : {
+          "type" : "string"
+        },
+        "id" : {
           "type" : "integer",
           "format" : "int64"
+        }
+      }
+    },
+    "UsuarioType" : {
+      "id" : "UsuarioType",
+      "properties" : {
+        "senha" : {
+          "type" : "string"
         },
-        "nome" : {
+        "ticket" : {
+          "type" : "string"
+        },
+        "email" : {
           "type" : "string"
         }
       }

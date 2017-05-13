@@ -1,6 +1,7 @@
 package com.obdread.web;
 
 import java.io.Serializable;
+import java.util.Locale;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
@@ -18,11 +19,13 @@ public class UserSettingsMB implements Serializable {
 	
 	private String theme;
 	private String layout;
-	private String language;
+	//private String language;
+	private Locale locale;
 	
 	@PostConstruct
 	void init() {
-		language = FacesContext.getCurrentInstance().getViewRoot().getLocale().getLanguage();
+		//language = FacesContext.getCurrentInstance().getViewRoot().getLocale().getLanguage();
+		locale = FacesContext.getCurrentInstance().getExternalContext().getRequestLocale();
 //		theme = applicationProperties.getTheme();
 //		layout = applicationProperties.getLayout();
 	}
@@ -42,13 +45,15 @@ public class UserSettingsMB implements Serializable {
 	public void setLayout(String layout) {
 		this.layout = layout;
 	}
-	
-	public String getLanguage() {
-		return language;
+
+	public Locale getLocale() {
+		return locale;
+	}
+
+	public void setLocale(Locale locale) {
+		this.locale = locale;
 	}
 	
-	public void setLanguage(String language) {
-		this.language = language;
-	}
+
 
 }

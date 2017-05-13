@@ -1,5 +1,6 @@
 package com.obdread.errosecu;
 
+import java.util.Calendar;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -46,7 +47,8 @@ public class ErrosEcuRN extends AppRN<ErrosEcuED, Long> {
 		ed.setVeiculoED(veiculoED);
 		ed.setDescricao(edType.getDescricao().toUpperCase());
 		ed.setLevel(edType.getLevel());
-
+		ed.setCodigoErro(edType.getCodigo());
+		ed.setDthLog(Calendar.getInstance()); // Data atual do sistema
 		return super.inclui(ed);
 	}
 

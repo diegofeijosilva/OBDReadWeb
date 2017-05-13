@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.obdread.infra.AppED;
+import com.obdread.util.UtilRN;
 
 @Entity
 @Table(name = "TBL_ERROS_ECU")
@@ -104,6 +105,10 @@ public class ErrosEcuED extends AppED<Long> implements Serializable {
 
 	public void setCodigoErro(String codigoErro) {
 		this.codigoErro = codigoErro;
+	}
+	
+	public String getDthLogFormatado(){
+		return UtilRN.converteddmmyy(this.dthLog);
 	}
 
 }
