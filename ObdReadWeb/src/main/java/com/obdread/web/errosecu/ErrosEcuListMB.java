@@ -1,5 +1,6 @@
 package com.obdread.web.errosecu;
 
+import java.util.Calendar;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -19,74 +20,92 @@ import com.obdread.veiculo.VeiculoRN;
 @ViewScoped
 public class ErrosEcuListMB extends AppListMB<ErrosEcuED, ErrosEcuED> {
 
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	@Inject
-	ErrosEcuRN errosEcuRN;
+  @Inject
+  ErrosEcuRN                errosEcuRN;
 
-	@Inject
-	VeiculoRN veiculoRN;
+  @Inject
+  VeiculoRN                 veiculoRN;
 
-	List<ErrosEcuED> listaErros;
-	List<VeiculoED> listaVeiculos;
-	Long veiculoId;
+  private List<ErrosEcuED>  listaErros;
+  private List<VeiculoED>   listaVeiculos;
+  private Long              veiculoId;
+  private Calendar          dthInicio = Calendar.getInstance();
+  private Calendar          dthFim = Calendar.getInstance();
 
-	@PostConstruct
-	void initRN() {
-		// Limpa a pesquisa
-		// limpa();
-		super.setRN(errosEcuRN);
+  @PostConstruct
+  void initRN() {
+    // Limpa a pesquisa
+    // limpa();
+    super.setRN(errosEcuRN);
 
-	}
+  }
 
-	@Override
-	public void init() {
-		ErrosEcuED ed = new ErrosEcuED();
-		// Lista os veículos do usuário logado na sessão
-		listaVeiculos = veiculoRN.listaVeiculosUsuarioLogado();
+  @Override
+  public void init() {
+    ErrosEcuED ed = new ErrosEcuED();
+    // Lista os veículos do usuário logado na sessão
+    listaVeiculos = veiculoRN.listaVeiculosUsuarioLogado();
 
-		super.init();
-	}
+    super.init();
+  }
 
-	public void listaErrosEcuVeiculo(AjaxBehaviorEvent vce) {
-		if (veiculoId != null)
-			listaErros = errosEcuRN.listaErrosEcuVeiculo(veiculoId);
-		else
-			listaErros = null;
-	}
+  public void listaErrosEcuVeiculo() {
+    if (veiculoId != null)
+      listaErros = errosEcuRN.listaErrosEcuVeiculo(veiculoId, dthInicio, dthFim);
+    else
+      listaErros = null;
+  }
 
-	@Override
-	public void limpa() {
-		// super.getPed().setUsaItensTela(true);
-		// super.getPed().setItensSituacaoSelecionados( new
-		// Integer[SituacaoCronogramaEnum.getAll().size()]);
-		// super.getPed().getItensSituacaoSelecionados()[0] = 1;
-		// super.getPed().getItensSituacaoSelecionados()[1] = 2;
-		super.limpa();
-	}
+  @Override
+  public void limpa() {
+    // super.getPed().setUsaItensTela(true);
+    // super.getPed().setItensSituacaoSelecionados( new
+    // Integer[SituacaoCronogramaEnum.getAll().size()]);
+    // super.getPed().getItensSituacaoSelecionados()[0] = 1;
+    // super.getPed().getItensSituacaoSelecionados()[1] = 2;
+    super.limpa();
+  }
 
-	public List<ErrosEcuED> getListaErros() {
-		return listaErros;
-	}
+  public List<ErrosEcuED> getListaErros() {
+    return listaErros;
+  }
 
-	public void setListaErros(List<ErrosEcuED> listaErros) {
-		this.listaErros = listaErros;
-	}
+  public void setListaErros(List<ErrosEcuED> listaErros) {
+    this.listaErros = listaErros;
+  }
 
-	public List<VeiculoED> getListaVeiculos() {
-		return listaVeiculos;
-	}
+  public List<VeiculoED> getListaVeiculos() {
+    return listaVeiculos;
+  }
 
-	public void setListaVeiculos(List<VeiculoED> listaVeiculos) {
-		this.listaVeiculos = listaVeiculos;
-	}
+  public void setListaVeiculos(List<VeiculoED> listaVeiculos) {
+    this.listaVeiculos = listaVeiculos;
+  }
 
-	public Long getVeiculoId() {
-		return veiculoId;
-	}
+  public Long getVeiculoId() {
+    return veiculoId;
+  }
 
-	public void setVeiculoId(Long veiculoId) {
-		this.veiculoId = veiculoId;
-	}
+  public void setVeiculoId(Long veiculoId) {
+    this.veiculoId = veiculoId;
+  }
+
+  public Calendar getDthInicio() {
+    return dthInicio;
+  }
+
+  public void setDthInicio(Calendar dthInicio) {
+    this.dthInicio = dthInicio;
+  }
+
+  public Calendar getDthFim() {
+    return dthFim;
+  }
+
+  public void setDthFim(Calendar dthFim) {
+    this.dthFim = dthFim;
+  }
 
 }

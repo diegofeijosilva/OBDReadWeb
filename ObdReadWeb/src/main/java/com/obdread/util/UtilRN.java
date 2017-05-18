@@ -88,5 +88,14 @@ public class UtilRN {
 		}
 		return new String();
 	}
+	
+	 public static String converteCalendarDateTime(Calendar obj) {
+	    if (obj != null) {
+	      SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	      df.setTimeZone(obj.getTimeZone());
+	      return df.format(obj.getTime());
+	    }
+	    return new String();
+	  }
 
 }

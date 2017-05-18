@@ -52,9 +52,9 @@ public class ErrosEcuRN extends AppRN<ErrosEcuED, Long> {
 		return super.inclui(ed);
 	}
 
-	public List<ErrosEcuED> listaErrosEcuVeiculo(Long veiculoId) {
+	public List<ErrosEcuED> listaErrosEcuVeiculo(Long veiculoId, Calendar dthInicio, Calendar dthFim) {
 		if(veiculoId != null)
-			return bd.listaErrosEcuVeiculo(veiculoId);
+			return bd.listaErrosEcuVeiculo(veiculoId, dthInicio, dthFim);
 		
 		return null;
 	}

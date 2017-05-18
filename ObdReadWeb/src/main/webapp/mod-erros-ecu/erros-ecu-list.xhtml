@@ -15,15 +15,35 @@
 			<p:panel id="panel" header="Listagem de Erros da ECU">
 
 				<h:panelGrid columns="2">
+
+					<p:outputLabel for="dateGroup" value="Período:" style="float:left" />
+					<h:panelGroup id="dateGroup">
+						<p:calendar id="dtInicio" showOn="button" pattern="dd/MM/yyyy"
+							mask="true" value="#{errosEcuListMB.dthInicio}"
+							size="10" onSelectUpdate="dateGroup" locale="pt">
+							<f:converter converterId="dateCalendarConverter" />
+						</p:calendar> &#160;
+					<h:outputLabel for="dtFim" value="até: " /> &#160;
+					<p:calendar id="dtFim" showOn="button" pattern="dd/MM/yyyy"
+							mask="true" value="#{errosEcuListMB.dthFim}"
+							size="10" locale="pt">
+							<f:converter converterId="dateCalendarConverter" />
+						</p:calendar>
+					</h:panelGroup>
+
 					<p:outputLabel for="veiculo" value="Veiculo: " />
 					<p:selectOneMenu id="veiculo" value="#{errosEcuListMB.veiculoId}"
-						style="width:125px" >
+						style="width:125px">
 
 						<f:selectItem itemValue="#{null}" itemLabel="Selecione..." />
-						<f:selectItems value="#{errosEcuListMB.listaVeiculos}" var="var" itemLabel="#{var.nome}" itemValue="#{var.veiculoID}" />
+						<f:selectItems value="#{errosEcuListMB.listaVeiculos}" var="var"
+							itemLabel="#{var.nome}" itemValue="#{var.veiculoID}" />
 
-						<p:ajax listener="#{errosEcuListMB.listaErrosEcuVeiculo}" update="lista" />
+						
 					</p:selectOneMenu>
+					
+					<p:commandButton icon="ui-icon-disk" value="Pesquisar"
+					action="#{errosEcuListMB.listaErrosEcuVeiculo}" update="lista" />
 
 				</h:panelGrid>
 
@@ -38,7 +58,8 @@
 					sortBy="#{entity.id}" sortOrder="ascending">
 
 					<!-- Código do Erro -->
-					<p:column headerText="Código" width="10%" style="text-align: center;">
+					<p:column headerText="Código" width="10%"
+						style="text-align: center;">
 						<h:outputText value="#{entity.codigoErro}" />
 					</p:column>
 
@@ -54,10 +75,11 @@
 					</p:column>
 
 					<!-- Level do Erro -->
-					<p:column headerText="Level" width="5%"
-						style="text-align: center;">
-						<h:graphicImage value="/resources/image/LevelWarning.png" rendered="#{entity.level == 1}" width="20" height="20"/>
-						<h:graphicImage value="/resources/image/LevelInfo.png" rendered="#{entity.level == 2}" width="23" height="23"/>
+					<p:column headerText="Level" width="5%" style="text-align: center;">
+						<h:graphicImage value="/resources/image/LevelWarning.png"
+							rendered="#{entity.level == 1}" width="20" height="20" />
+						<h:graphicImage value="/resources/image/LevelInfo.png"
+							rendered="#{entity.level == 2}" width="23" height="23" />
 					</p:column>
 
 				</p:dataTable>
