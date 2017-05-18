@@ -1,6 +1,7 @@
 package com.obdread.ed;
 
 import java.io.Serializable;
+import java.util.Calendar;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -51,6 +52,9 @@ public class DadosVeiculoED extends AppED<Long> implements Serializable {
 
 	@Column(name = "OBD_QTD_COMBUSTIVEL")
 	private Long obdQtdeCombustivel;
+
+	@Column(name = "DTH_LOG")
+	private Calendar dthLog;
 
 	@Override
 	public Long getId() {
@@ -119,6 +123,14 @@ public class DadosVeiculoED extends AppED<Long> implements Serializable {
 
 	public void setObdQtdeCombustivel(Long obdQtdeCombustivel) {
 		this.obdQtdeCombustivel = obdQtdeCombustivel;
+	}
+
+	public Calendar getDthLog() {
+		return dthLog;
+	}
+
+	public void setDthLog(Calendar dthLog) {
+		this.dthLog = dthLog;
 	}
 
 }
