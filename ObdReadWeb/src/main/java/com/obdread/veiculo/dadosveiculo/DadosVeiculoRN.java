@@ -1,5 +1,8 @@
 package com.obdread.veiculo.dadosveiculo;
 
+import java.util.Calendar;
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.core.Response;
@@ -68,5 +71,9 @@ public class DadosVeiculoRN extends AppRN<DadosVeiculoED, Long> {
 		if (dados.getIdVeiculo().equals(0))
 			throw new RNException("Veiculo não encontrado!");
 	}
+
+  public List<DadosVeiculoED> listaHistoricoGPSVeiculo(Long veiculoId, Calendar dthInicio, Calendar dthFim) {
+    return bd.listaHistoricoGPSVeiculo(veiculoId, dthInicio, dthFim);
+  }
 
 }
