@@ -1,8 +1,9 @@
 package com.obdread.web.veiculo;
 
-import java.util.List;
+import java.io.IOException;
 
 import javax.annotation.PostConstruct;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -25,7 +26,7 @@ public class VeiculoFormMB extends AppFormMB<VeiculoED, Long> {
 	@Inject
 	SessionMB logon;
 
-	private String[] listaAnosFabricacao = { "2000", "2001", "2002" };
+	private String[] listaAnosFabricacao = { "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018" };
 
 	@PostConstruct
 	void initRN() {
@@ -51,6 +52,17 @@ public class VeiculoFormMB extends AppFormMB<VeiculoED, Long> {
 		super.getEd().setUsuarioED(logon.getUsuarioLogado());
 
 		super.salva();
+
+		// Apresenta a Mensagem do Dialog antes de executar o Redirect
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.getExternalContext().getFlash().setKeepMessages(true);
+
+		// Retorna para tela de listagem
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect("veiculo-list.xhtml");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public String[] getListaAnosFabricacao() {

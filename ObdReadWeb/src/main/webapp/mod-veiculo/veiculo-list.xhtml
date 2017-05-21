@@ -13,20 +13,12 @@
 		<h:form id="form">
 
 			<p:panel id="panel" header="Listagem de Veículos">
-				<p:messages id="messages" showDetail="true" autoUpdate="true"
-					closable="true" />
 
 				<p:toolbar id="botoesPanel">
 					<f:facet name="left">
 						<p:commandButton value="Novo" icon="ui-icon-document"
 							action="veiculo-form?faces-redirect=true" ajax="false"
 							rendered="true" />
-
-						<p:commandButton value="Pesquisar" icon="ui-icon-search"
-							process="@this"
-							oncomplete="PF('pesquisarJuntaCronograma').show();"
-							rendered="true" />
-
 					</f:facet>
 
 				</p:toolbar>

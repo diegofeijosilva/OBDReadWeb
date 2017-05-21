@@ -48,16 +48,16 @@
 					</p:selectOneMenu>
 					
 					<p:commandButton icon="ui-icon-disk" value="Pesquisar"
-					action="#{infoGPSListMB.listaHistoricoGPSVeiculo}" update="gmap" />
+					action="#{infoGPSListMB.listaHistoricoGPSVeiculo}" update="@form" />
 
 				</h:panelGrid>
 
 				<p:separator />
 
 				<f:view contentType="text/html">
-					<p:gmap id="gmap"  center="-30.074238, -51.016985" zoom="50" type="HYBRID"
+					<p:gmap id="gmap"  center="-30.074238, -51.016985" zoom="15" type="HYBRID"
 						style="width:100%;height:400px"
-						model="#{infoGPSListMB.simpleModel}" />
+						model="#{infoGPSListMB.simpleModel}" rendered="#{infoGPSListMB.listaHistGPS.size() > 0 ? true : false}"/>
 					<h:messages id="msgerro"></h:messages>
 				</f:view>
 
