@@ -88,14 +88,29 @@ public class UtilRN {
 		}
 		return new String();
 	}
+
+	public static String converteCalendarDateTime(Calendar obj) {
+		if (obj != null) {
+			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			df.setTimeZone(obj.getTimeZone());
+			return df.format(obj.getTime());
+		}
+		return new String();
+	}
 	
-	 public static String converteCalendarDateTime(Calendar obj) {
-	    if (obj != null) {
-	      SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	      df.setTimeZone(obj.getTimeZone());
-	      return df.format(obj.getTime());
-	    }
-	    return new String();
-	  }
+	/**
+	 * RETORNA A HORA E MINUTO
+	 * @param obj
+	 * @return
+	 */
+	
+	public static String retornaHHMM(Calendar obj) {
+		if (obj != null) {
+			SimpleDateFormat df = new SimpleDateFormat("HH:mm");
+			df.setTimeZone(obj.getTimeZone());
+			return df.format(obj.getTime());
+		}
+		return new String();
+	}
 
 }

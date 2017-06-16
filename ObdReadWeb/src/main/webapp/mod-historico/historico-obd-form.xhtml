@@ -1,0 +1,71 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/WEB-INF/templates/layout-classic.xhtml">
+
+
+
+	<ui:define name="body">
+		<f:event type="preRenderView" listener="#{infoOBDListMB.init}" />
+
+		<h:form id="form" onkeypress="return event.keyCode != 13">
+
+			<p:panel id="panel" header="Histórico OBD">
+
+				<h:panelGrid columns="2">
+
+					<p:outputLabel for="dateGroup" value="Período:" style="float:left" />
+					<h:panelGroup id="dateGroup">
+						<p:calendar id="dtInicio" showOn="button" pattern="dd/MM/yyyy"
+							mask="true" value="#{infoOBDListMB.dthInicio}" size="10"
+							onSelectUpdate="dateGroup" locale="pt">
+							<f:converter converterId="dateCalendarConverter" />
+						</p:calendar> &#160;
+					<h:outputLabel for="dtFim" value="até: " /> &#160;
+					<p:calendar id="dtFim" showOn="button" pattern="dd/MM/yyyy"
+							mask="true" value="#{infoOBDListMB.dthFim}" size="10" locale="pt">
+							<f:converter converterId="dateCalendarConverter" />
+						</p:calendar>
+					</h:panelGroup>
+
+					<p:outputLabel for="veiculo" value="Veiculo: " />
+					<p:selectOneMenu id="veiculo" value="#{infoOBDListMB.veiculoId}"
+						style="width:125px">
+
+						<f:selectItem itemValue="#{null}" itemLabel="Selecione..." />
+						<f:selectItems value="#{infoOBDListMB.listaVeiculos}" var="var"
+							itemLabel="#{var.nome}" itemValue="#{var.veiculoID}" />
+
+
+					</p:selectOneMenu>
+
+					<p:commandButton icon="ui-icon-disk" value="Pesquisar"
+						action="#{infoOBDListMB.listaHistoricoGPSVeiculo}" update="@form" />
+
+				</h:panelGrid>
+
+				<p:separator />
+
+				<h:panelGrid columns="2" border="0" style="width:100%">
+				<p:chart type="line" model="#{infoOBDListMB.lineModelVelocidade}"
+					style="height:200px;width:500px" rendered="#{infoOBDListMB.listaHistOBD.size() > 0}"/>
+
+				<p:chart type="line" model="#{infoOBDListMB.lineModelRPM}"
+					style="height:200px;width:500px" rendered="#{infoOBDListMB.listaHistOBD.size() > 0}"/>
+
+				<p:chart type="metergauge"
+					model="#{infoOBDListMB.meterGaugeModel1}"
+					style="width:350px;height:230px" rendered="#{infoOBDListMB.listaHistOBD.size() > 0}"/>
+			</h:panelGrid>
+
+			</p:panel>
+		</h:form>
+
+
+	</ui:define>
+
+
+</ui:composition>

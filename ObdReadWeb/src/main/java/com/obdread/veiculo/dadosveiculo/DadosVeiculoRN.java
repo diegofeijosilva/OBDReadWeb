@@ -46,16 +46,16 @@ public class DadosVeiculoRN extends AppRN<DadosVeiculoED, Long> {
 
 		if (usuarioED == null || veiculoED == null)
 			throw new RNException("Veiculo não encontrado!");
-		
+
 		DadosVeiculoED ed = new DadosVeiculoED();
-		
+
 		ed.setUsuarioED(usuarioED);
 		ed.setVeiculoED(veiculoED);
-		
+
 		// Dados do GPS
 		ed.setGpsLat(dados.getLatitude());
 		ed.setGpsLong(dados.getLongitude());
-		
+
 		/// Dados vindos da ECU
 		ed.setObdQtdeCombustivel(dados.getObdQtdeCombustivel());
 		ed.setObdRpm(dados.getObdRpm());
@@ -72,8 +72,12 @@ public class DadosVeiculoRN extends AppRN<DadosVeiculoED, Long> {
 			throw new RNException("Veiculo não encontrado!");
 	}
 
-  public List<DadosVeiculoED> listaHistoricoGPSVeiculo(Long veiculoId, Calendar dthInicio, Calendar dthFim) {
-    return bd.listaHistoricoGPSVeiculo(veiculoId, dthInicio, dthFim);
-  }
+	public List<DadosVeiculoED> listaHistoricoGPSVeiculo(Long veiculoId, Calendar dthInicio, Calendar dthFim) {
+		return bd.listaHistoricoGPSVeiculo(veiculoId, dthInicio, dthFim);
+	}
+
+	public List<DadosVeiculoED> listaHistoricoOBDVeiculo(Long veiculoId, Calendar dthAtual) {
+		return bd.listaHistoricoOBDVeiculo(veiculoId, dthAtual);
+	}
 
 }

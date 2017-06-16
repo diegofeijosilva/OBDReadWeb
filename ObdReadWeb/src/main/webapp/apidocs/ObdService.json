@@ -79,6 +79,17 @@
         "name" : "user",
         "required" : true
       } ],
+      "summary" : "Login para o sistema mobile",
+      "responseMessages" : [ {
+        "code" : 403,
+        "message" : "erro Usuario não autorizado"
+      }, {
+        "code" : 404,
+        "message" : "Transacao não encontrada!"
+      }, {
+        "code" : 500,
+        "message" : "Erro interno -"
+      } ],
       "produces" : [ "application/json" ]
     } ]
   }, {
@@ -111,7 +122,7 @@
     "operations" : [ {
       "method" : "POST",
       "nickname" : "recebeErrosEcu",
-      "type" : "Response",
+      "type" : "ErrosEcuType",
       "parameters" : [ {
         "type" : "ErrosEcuType",
         "paramType" : "body",

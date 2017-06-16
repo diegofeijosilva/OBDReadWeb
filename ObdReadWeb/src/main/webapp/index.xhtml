@@ -7,10 +7,34 @@
 	template="/WEB-INF/templates/layout-classic.xhtml">
 
 	<ui:define name="body">
-	<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
-		<div class="div-logo-inicio">
-<!-- 			<h:graphicImage library="image" name="logo-centro.png" /> -->
-		</div>
-	</ui:define>
+		<f:event type="preRenderView" listener="#{dashBoardListMB.init}" />
+		<h:form id="form">
+			<h:panelGrid columns="4" border="0" style="width:100%">
+				<h:graphicImage library="image" style="width:220px" />
+				<h:graphicImage library="image" name="logo-dashboard.png" style="width:300px" />
+				<p:outputLabel for="veiculo" value="Veiculo: " />
+					<p:selectOneMenu id="veiculo" value="#{dashBoardListMB.veiculoId}"
+						style="width:125px">
 
+						<f:selectItems value="#{dashBoardListMB.listaVeiculos}" var="var"
+							itemLabel="#{var.nome}" itemValue="#{var.veiculoID}" />
+
+						<p:ajax listener="#{dashBoardListMB.valueChangeListener}" update=":form" />
+					</p:selectOneMenu>
+			</h:panelGrid>
+
+			<h:panelGrid columns="2" border="0" style="width:100%">
+				<p:chart type="line" model="#{dashBoardListMB.lineModelVelocidade}"
+					style="height:200px;width:500px" rendered="#{dashBoardListMB.listaHistOBD.size() > 0}"/>
+
+				<p:chart type="line" model="#{dashBoardListMB.lineModelRPM}"
+					style="height:200px;width:500px" rendered="#{dashBoardListMB.listaHistOBD.size() > 0}"/>
+
+				<p:chart type="metergauge"
+					model="#{dashBoardListMB.meterGaugeModel1}"
+					style="width:350px;height:230px" rendered="#{dashBoardListMB.listaHistOBD.size() > 0}"/>
+			</h:panelGrid>
+
+		</h:form>
+	</ui:define>
 </ui:composition>
