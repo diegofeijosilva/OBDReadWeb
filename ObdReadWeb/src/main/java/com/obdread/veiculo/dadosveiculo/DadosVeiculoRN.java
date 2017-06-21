@@ -79,5 +79,9 @@ public class DadosVeiculoRN extends AppRN<DadosVeiculoED, Long> {
 	public List<DadosVeiculoED> listaHistoricoOBDVeiculo(Long veiculoId, Calendar dthAtual) {
 		return bd.listaHistoricoOBDVeiculo(veiculoId, dthAtual);
 	}
+	
+	public List<DadosVeiculoED> listaHistoricoOBDVeiculo(Long veiculoId, Calendar dthInicio, Calendar dthFim) {
+		return bd.listaHistoricoOBDVeiculo(veiculoId, dthInicio, dthFim);
+	}
 
 }

@@ -48,6 +48,22 @@ public class DadosVeiculoBD extends AppBD<DadosVeiculoED, Long> {
 		}
 	}
 
+	public List<DadosVeiculoED> listaHistoricoOBDVeiculo(Long veiculoId, Calendar dthInicio, Calendar dthFim) {
+		StringBuffer sql = new StringBuffer();
+		sql.append(" SELECT * FROM TBL_DADOS_VEICULO A WHERE A.VEICULO_ID = :veiculo");
+		sql.append(" AND DTH_LOG BETWEEN :dthInicio AND :dthFim ");
+
+		Query query = super.getEntityManager().createNativeQuery(sql.toString(), DadosVeiculoED.class);
+		query.setParameter("veiculo", veiculoId);
+		query.setParameter("dthInicio", UtilRN.converteCalendarDateTime(dthInicio));
+		query.setParameter("dthFim", UtilRN.converteCalendarDateTime(dthFim));
+		try {
+			return query.getResultList();
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
+
 	// @Inject
 	// MunicipioRN municipioRN;
 	//

@@ -1,0 +1,90 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/WEB-INF/templates/layout-classic.xhtml">
+
+	<ui:define name="body">
+
+		<f:event type="preRenderView" listener="#{relGpsListMB.init}" />
+
+		<h:form id="form">
+
+			<p:panel id="panel" header="Listagem Dados GPS">
+
+				<h:panelGrid columns="2">
+
+					<p:outputLabel for="dateGroup" value="Período:" style="float:left" />
+					<h:panelGroup id="dateGroup">
+						<p:calendar id="dtInicio" showOn="button" pattern="dd/MM/yyyy"
+							mask="true" value="#{relGpsListMB.dthInicio}"
+							size="10" onSelectUpdate="dateGroup" locale="pt">
+							<f:converter converterId="dateCalendarConverter" />
+						</p:calendar> &#160;
+					<h:outputLabel for="dtFim" value="até: " /> &#160;
+					<p:calendar id="dtFim" showOn="button" pattern="dd/MM/yyyy"
+							mask="true" value="#{relGpsListMB.dthFim}"
+							size="10" locale="pt">
+							<f:converter converterId="dateCalendarConverter" />
+						</p:calendar>
+					</h:panelGroup>
+
+					<p:outputLabel for="veiculo" value="Veiculo: " />
+					<p:selectOneMenu id="veiculo" value="#{relGpsListMB.veiculoId}"
+						style="width:125px">
+
+						<f:selectItem itemValue="#{null}" itemLabel="Selecione..." />
+						<f:selectItems value="#{relGpsListMB.listaVeiculos}" var="var"
+							itemLabel="#{var.nome}" itemValue="#{var.veiculoID}" />
+
+						
+					</p:selectOneMenu>
+					
+					<p:commandButton icon="ui-icon-disk" value="Pesquisar"
+					action="#{relGpsListMB.listaDadosGpsVeiculo}" update="lista" />
+
+				</h:panelGrid>
+
+				<p:separator />
+
+				<p:dataTable id="lista" var="entity" rowKey="#{entity.id}"
+					value="#{relGpsListMB.listaDadosGps}" rows="10" paginator="true"
+					paginatorTemplate="#{msg['datatable.paginatorTemplate']}"
+					emptyMessage="#{msg['datatable.norecordsfound']}"
+					currentPageReportTemplate="#{msg['datatable.pageReportTemplate']}"
+					rowsPerPageTemplate="5,10,15" paginatorPosition="bottom"
+					sortBy="#{entity.id}" sortOrder="ascending">
+
+					<!-- Data do Log -->
+					<p:column headerText="Data" width="10%"
+						style="text-align: center;">
+						<h:outputText value="#{entity.dthLogFormatado}" />
+					</p:column>
+
+					<!-- Latitude -->
+					<p:column headerText="Dados Latitude" width="33%" style="text-align: center;">
+						<h:outputText value="#{entity.gpsLat}" />
+					</p:column>
+
+					<!-- Data do Log -->
+					<p:column headerText="Dados Longitude" width="33%" style="text-align: center;">
+						<h:outputText value="#{entity.gpsLong}" />
+					</p:column>
+
+				</p:dataTable>
+
+			</p:panel>
+		</h:form>
+
+		<!-- 		<p:dialog header="Pesquisar Cronograma" -->
+		<!-- 			visible="#{cronogramaListMB.abreTelaPesquisa != 1}" dynamic="false" -->
+		<!-- 			modal="true" appendTo="@(body)" widgetVar="pesquisarJuntaCronograma" -->
+		<!-- 			height="40%" width="35%"> -->
+		<!-- 			<ui:include src="/mod-comissao/junta-cronograma-pesq.xhtml" /> -->
+		<!-- 		</p:dialog> -->
+
+	</ui:define>
+
+</ui:composition>

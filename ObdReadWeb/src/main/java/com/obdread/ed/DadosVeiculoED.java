@@ -15,6 +15,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import com.obdread.infra.AppED;
+import com.obdread.util.UtilRN;
 
 @Entity
 @Table(name = "TBL_DADOS_VEICULO")
@@ -131,6 +132,10 @@ public class DadosVeiculoED extends AppED<Long> implements Serializable {
 
 	public void setDthLog(Calendar dthLog) {
 		this.dthLog = dthLog;
+	}
+	
+	public String getDthLogFormatado(){
+		return UtilRN.converteddmmyy(this.dthLog);
 	}
 
 }
