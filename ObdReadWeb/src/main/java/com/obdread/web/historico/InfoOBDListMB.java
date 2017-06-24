@@ -45,7 +45,6 @@ public class InfoOBDListMB extends AppListMB<DadosVeiculoED, DadosVeiculoED> {
 	private List<VeiculoED> listaVeiculos;
 	private Long veiculoId;
 	private Calendar dthInicio = Calendar.getInstance();
-	private Calendar dthFim = Calendar.getInstance();
 
 	private List<DadosVeiculoED> listaHistOBD;
 
@@ -76,7 +75,7 @@ public class InfoOBDListMB extends AppListMB<DadosVeiculoED, DadosVeiculoED> {
 		// }
 		// }
 
-		listaHistoricoGPSVeiculo();
+		//listaHistoricoGPSVeiculo();
 
 		createLineModels();
 
@@ -196,8 +195,9 @@ public class InfoOBDListMB extends AppListMB<DadosVeiculoED, DadosVeiculoED> {
 	}
 
 	public void listaHistoricoGPSVeiculo() {
+
 		if (veiculoId != null) {
-			listaHistOBD = infoVeiRN.listaHistoricoGPSVeiculo(veiculoId, dthInicio, dthFim);
+			listaHistOBD = infoVeiRN.listaHistoricoOBDVeiculo(veiculoId, dthInicio);
 
 			if (listaHistOBD != null && !listaHistOBD.isEmpty()) {
 
@@ -233,14 +233,6 @@ public class InfoOBDListMB extends AppListMB<DadosVeiculoED, DadosVeiculoED> {
 
 	public void setDthInicio(Calendar dthInicio) {
 		this.dthInicio = dthInicio;
-	}
-
-	public Calendar getDthFim() {
-		return dthFim;
-	}
-
-	public void setDthFim(Calendar dthFim) {
-		this.dthFim = dthFim;
 	}
 
 	public Long getVeiculoId() {

@@ -5,7 +5,6 @@ import java.io.Serializable;
 /**
  * Contém as propriedades necessárias para montagem dinâmica 
  * dos critérios de ordenação de uma lista (ORDER BY)
- * @author mauro-flores
  *
  */
 public class Ordem implements Serializable {

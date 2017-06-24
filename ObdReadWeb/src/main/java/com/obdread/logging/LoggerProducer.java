@@ -8,9 +8,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Classe que produz instância de Logger.
- * 
- * @author mauricio-wodarski
- * 
  */
 public class LoggerProducer {
 

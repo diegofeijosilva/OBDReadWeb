@@ -5,10 +5,6 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
-
-import org.apache.http.HttpStatus;
 
 import com.obdread.ed.DadosVeiculoED;
 import com.obdread.ed.UsuarioED;

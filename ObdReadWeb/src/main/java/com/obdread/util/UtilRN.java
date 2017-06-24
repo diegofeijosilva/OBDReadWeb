@@ -97,13 +97,14 @@ public class UtilRN {
 		}
 		return new String();
 	}
-	
+
 	/**
 	 * RETORNA A HORA E MINUTO
+	 * 
 	 * @param obj
 	 * @return
 	 */
-	
+
 	public static String retornaHHMM(Calendar obj) {
 		if (obj != null) {
 			SimpleDateFormat df = new SimpleDateFormat("HH:mm");
@@ -111,6 +112,18 @@ public class UtilRN {
 			return df.format(obj.getTime());
 		}
 		return new String();
+	}
+
+	/**
+	 * Retorna a diferença entre datas
+	 */
+	public static Long diferencaEntreDatasEmDias(Calendar dthInicio, Calendar dthFim) {
+		// Calcula a diferença entre hoje e da data de inicio
+		long diferenca = dthFim.getTimeInMillis() - dthInicio.getTimeInMillis();
+
+		// Quantidade de milissegundos em um dia
+		int tempoDia = 1000 * 60 * 60 * 24;
+		return diferenca / tempoDia;
 	}
 
 }

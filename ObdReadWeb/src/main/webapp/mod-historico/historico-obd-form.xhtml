@@ -17,18 +17,13 @@
 
 				<h:panelGrid columns="2">
 
-					<p:outputLabel for="dateGroup" value="Período:" style="float:left" />
+					<p:outputLabel for="dateGroup" value="Data:" style="float:left" />
 					<h:panelGroup id="dateGroup">
 						<p:calendar id="dtInicio" showOn="button" pattern="dd/MM/yyyy"
 							mask="true" value="#{infoOBDListMB.dthInicio}" size="10"
 							onSelectUpdate="dateGroup" locale="pt">
 							<f:converter converterId="dateCalendarConverter" />
 						</p:calendar> &#160;
-					<h:outputLabel for="dtFim" value="até: " /> &#160;
-					<p:calendar id="dtFim" showOn="button" pattern="dd/MM/yyyy"
-							mask="true" value="#{infoOBDListMB.dthFim}" size="10" locale="pt">
-							<f:converter converterId="dateCalendarConverter" />
-						</p:calendar>
 					</h:panelGroup>
 
 					<p:outputLabel for="veiculo" value="Veiculo: " />

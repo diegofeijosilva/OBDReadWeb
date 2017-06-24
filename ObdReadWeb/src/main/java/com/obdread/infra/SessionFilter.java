@@ -10,7 +10,6 @@ import com.obdread.infra.persistence.FrameworkED;
 
 /**
  * 
- * @author rafael-pestano
  * 
  * Classe que mantem filtros das telas de pesquisa em sessão.
  * Os filtros são agrupados(key do hashMap) por AppListMB, ou seja,
