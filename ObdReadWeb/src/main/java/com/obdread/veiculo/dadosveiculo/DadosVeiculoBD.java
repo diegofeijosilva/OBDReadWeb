@@ -31,16 +31,21 @@ public class DadosVeiculoBD extends AppBD<DadosVeiculoED, Long> {
 
 	//// Utilizado no dashboard
 	public List<DadosVeiculoED> listaHistoricoOBDVeiculo(Long veiculoId, Calendar dthAtual) {
+		
+		dthAtual.set(Calendar.HOUR, 0);
+		dthAtual.set(Calendar.MINUTE, 0);
+		dthAtual.set(Calendar.SECOND, 0);
+		
 		StringBuffer sql = new StringBuffer();
 		sql.append(" SELECT * FROM TBL_DADOS_VEICULO");
 		sql.append(" WHERE VEICULO_ID = :veiculo ");
-		//sql.append(" AND DTH_LOG = :dthAtual ");
-		sql.append(" ORDER BY CTR_DTH_INC DESC ");
+		sql.append(" AND DTH_LOG = :dthAtual ");
+		sql.append(" ORDER BY CTR_DTH_INC ASC ");
 		sql.append(" LIMIT 10 ");
 
 		Query query = super.getEntityManager().createNativeQuery(sql.toString(), DadosVeiculoED.class);
 		query.setParameter("veiculo", veiculoId);
-		//query.setParameter("dthInicio", UtilRN.converteCalendarDateTime(dthAtual));
+		query.setParameter("dthAtual", UtilRN.converteCalendarDateTime(dthAtual));
 		try {
 			return query.getResultList();
 		} catch (NoResultException e) {

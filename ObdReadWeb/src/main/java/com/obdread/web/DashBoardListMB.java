@@ -70,7 +70,7 @@ public class DashBoardListMB extends AppListMB<DadosVeiculoED, DadosVeiculoED> {
 		listaVeiculos = veiculoRN.listaVeiculosUsuarioLogado();
 
 		//// Pega o primeiro veículo da lista
-		if (listaVeiculos != null || listaVeiculos.size() > 0) {
+		if (listaVeiculos != null && listaVeiculos.size() > 0) {
 			if (veiculoED == null) {
 				veiculoED = listaVeiculos.get(0);
 			}
@@ -78,9 +78,10 @@ public class DashBoardListMB extends AppListMB<DadosVeiculoED, DadosVeiculoED> {
 
 		listaHistoricoGPSVeiculo();
 
-		createLineModels();
-
-		createMeterGaugeModels();
+		if (listaHistOBD != null) {
+			createLineModels();
+			createMeterGaugeModels();
+		}
 
 		super.init();
 	}
@@ -89,7 +90,7 @@ public class DashBoardListMB extends AppListMB<DadosVeiculoED, DadosVeiculoED> {
 
 		if (veiculoId != null) {
 			veiculoED = veiculoRN.consulta(veiculoId);
-			//this.listaHistoricoGPSVeiculo();
+			// this.listaHistoricoGPSVeiculo();
 		} else {
 			// listaErros = null;
 		}
@@ -204,6 +205,11 @@ public class DashBoardListMB extends AppListMB<DadosVeiculoED, DadosVeiculoED> {
 
 	public void listaHistoricoGPSVeiculo() {
 		if (veiculoED != null) {
+
+			dthInicio.set(Calendar.HOUR, 0);
+			dthInicio.set(Calendar.MINUTE, 0);
+			dthInicio.set(Calendar.SECOND, 0);
+
 			listaHistOBD = infoVeiRN.listaHistoricoOBDVeiculo(veiculoED.getId(), dthInicio);
 
 			if (listaHistOBD != null && !listaHistOBD.isEmpty()) {
